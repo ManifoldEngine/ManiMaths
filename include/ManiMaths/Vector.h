@@ -15,16 +15,52 @@ namespace Mani
 		T y = static_cast<T>(0);
 		T z = static_cast<T>(0);
 
-		static bool isNearlyEqual(const Vector3<T>& lhs, const Vector3<T> rhs, double tolerance = FLT_EPSILON)
+		template<IsNumericType T1, IsNumericType T2>
+		static bool isNearlyEqual(const Vector3<T1>& lhs, const Vector3<T2> rhs, double tolerance = FLT_EPSILON)
 		{
 			return	std::abs(lhs.x - rhs.x) <= tolerance &&
 					std::abs(lhs.y - rhs.y) <= tolerance &&
 					std::abs(lhs.z - rhs.z) <= tolerance;
 		}
 
-		bool isNearlyEqual(const Vector3<T>& rhs, double tolerance = FLT_EPSILON)
+		template<IsNumericType T2>
+		bool isNearlyEqual(const Vector3<T2>& rhs, double tolerance = FLT_EPSILON)
 		{
 			return isNearlyEqual(*this, rhs, tolerance);
+		}
+
+		T length() const
+		{
+			return std::sqrt(x * x + y * y + z * z);
+		}
+
+		T lengthSquared() const
+		{
+			return x * x + y * y + z * z;
+		}
+
+		template<IsNumericType T1, IsNumericType T2>
+		static T distance(const Vector3<T1>& v1, const Vector3<T2>& v2)
+		{
+			return std::sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z));
+		}
+
+		template<IsNumericType T2>
+		T distance(const Vector3<T2>& other) const
+		{
+			return distance(*this, other);
+		}
+
+		template<IsNumericType T1, IsNumericType T2>
+		static T distanceSquared(const Vector3<T1>& v1, const Vector3<T2>& v2)
+		{
+			return (v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z);
+		}
+
+		template<IsNumericType T2>
+		T distanceSquared(const Vector3<T2>& other) const
+		{
+			return distanceSquared(*this, other);
 		}
 
 		std::string toString() const
@@ -111,8 +147,8 @@ namespace Mani
 	{
 		return {
 			lhs.x * scale,
-			lhs.y* scale,
-			lhs.z* scale,
+			lhs.y * scale,
+			lhs.z * scale,
 		};
 	}
 

@@ -135,6 +135,37 @@ MANI_SECTION_BEGIN(Vector, "Vector section")
 		MANI_TEST_ASSERT((v2 + v1).isNearlyEqual(expected), "v1 + v2 should equal expected");
 	}
 
+	MANI_TEST(VectorLength, "Should correctly compute the length of a vector")
+	{
+		Mani::Vector3f v1{ 1.f, 2.f, 3.f };
+		const float length = v1.length();
+		const float lengthSquared = v1.lengthSquared();
+
+		constexpr float expectedSquared = 14.f;
+
+		MANI_TEST_ASSERT(std::abs(length - std::sqrt(expectedSquared)) <= FLT_EPSILON, "length should be equal to what is expected");
+		MANI_TEST_ASSERT(std::abs(lengthSquared - expectedSquared) <= FLT_EPSILON, "length should be equal to what is expected");
+	}
+
+	MANI_TEST(DistanceMaths, "Should correctly compute the distance betweem 2 vectors")
+	{
+		Mani::Vector3f v1{ 1.f, 2.f, 3.f };
+		Mani::Vector3f v2{ 2.f, 3.f, 4.f };
+
+		const float v1tov2 = v1.distance(v2);
+		const float v2tov1 = v2.distance(v1);
+
+		const float v1tov2squared = v1.distanceSquared(v2);
+		const float v2tov1squared = v2.distanceSquared(v1);
+
+		constexpr float expectedSquared = 3.f;
+		MANI_TEST_ASSERT(std::abs(v1tov2 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(std::abs(v2tov1 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+
+		MANI_TEST_ASSERT(std::abs(v1tov2squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(std::abs(v2tov1squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+	}
+
 	MANI_TEST(ToString, "Should output a properly formatted string")
 	{
 		Mani::Vector3i v1{ 1, 2, 3 };
