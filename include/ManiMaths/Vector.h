@@ -40,20 +40,20 @@ namespace Mani
 	typedef Vector3<unsigned int> Vector3ui;
 	typedef Vector3<unsigned long> Vector3ul;
 
-	template<IsNumericType T>
-	bool operator==(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2>
+	bool operator==(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 	}
 
-	template<IsNumericType T>
-	bool operator!=(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2>
+	bool operator!=(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
 	}
 
-	template<IsNumericType T>
-	Vector3<T> operator+(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
+	Vector3<TReturn> operator+(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
 			lhs.x + rhs.x, 
@@ -62,8 +62,8 @@ namespace Mani
 		};
 	}
 
-	template<IsNumericType T>
-	Vector3<T> operator-(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
+	Vector3<TReturn> operator-(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
 			lhs.x - rhs.x, 
@@ -72,8 +72,8 @@ namespace Mani
 		};
 	}
 
-	template<IsNumericType T>
-	Vector3<T> operator*(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
+	Vector3<TReturn> operator*(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
 			lhs.x * rhs.x, 
@@ -82,32 +82,32 @@ namespace Mani
 		};
 	}
 
-	template<IsNumericType T>
-	void operator+=(Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2>
+	void operator+=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x += rhs.x;
 		lhs.y += rhs.y;
 		lhs.z += rhs.z;		
 	}
 
-	template<IsNumericType T>
-	void operator-=(Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2>
+	void operator-=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x -= rhs.x;
 		lhs.y -= rhs.y;
 		lhs.z -= rhs.z;
 	}
 
-	template<IsNumericType T>
-	void operator*=(Vector3<T>& lhs, const Vector3<T>& rhs)
+	template<IsNumericType T1, IsNumericType T2>
+	void operator*=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x *= rhs.x;
 		lhs.y *= rhs.y;
 		lhs.z *= rhs.z;
 	}
 
-	template<IsNumericType T, IsNumericType TScale>
-	Vector3<T> operator*(const Vector3<T>& lhs, TScale scale)
+	template<IsNumericType T, IsNumericType TScale, IsNumericType TReturn = T>
+	Vector3<TReturn> operator*(const Vector3<T>& lhs, TScale scale)
 	{
 		return {
 			lhs.x * scale,
@@ -124,8 +124,8 @@ namespace Mani
 		lhs.z *= scale;
 	}
 
-	template<IsNumericType T, IsNumericType TScale>
-	Vector3<T> operator/(const Vector3<T>& lhs, TScale scale)
+	template<IsNumericType T, IsNumericType TScale, IsNumericType TReturn = T>
+	Vector3<TReturn> operator/(const Vector3<T>& lhs, TScale scale)
 	{
 		assert(scale != 0);
 		return {

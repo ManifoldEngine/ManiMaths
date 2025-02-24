@@ -124,6 +124,17 @@ MANI_SECTION_BEGIN(Vector, "Vector section")
 		}
 	}
 
+	MANI_TEST(InterTypeMath, "Should be able to do math between different vector types")
+	{
+		Mani::Vector3i v1{ 1, 2, 3 };
+		Mani::Vector3f v2{ 1.8f, 2.5f, 3.2f };
+		Mani::Vector3f expected{ 2.8f, 4.5f, 6.2f };
+
+		// doesn't compile because float to int requires a narrowing conversion which requires an explicit cast.
+		// MANI_TEST_ASSERT((v1 + v2).isNearlyEqual(expected), "v1 + v2 should equal expected");
+		MANI_TEST_ASSERT((v2 + v1).isNearlyEqual(expected), "v1 + v2 should equal expected");
+	}
+
 	MANI_TEST(ToString, "Should output a properly formatted string")
 	{
 		Mani::Vector3i v1{ 1, 2, 3 };
