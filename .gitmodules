@@ -1,3 +1,6 @@
 [submodule "ThirdParties/ManiTests"]
 	path = ThirdParties/ManiTests
 	url = https://github.com/ManifoldEngine/ManiTests.git
+[submodule "ThirdParties/ManiZ"]
+	path = ThirdParties/ManiZ
+	url = https://github.com/ManifoldEngine/ManiZ.git

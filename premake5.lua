@@ -12,6 +12,7 @@ workspace "ManiMaths"
 
     includedirs { "include/" }
     includedirs { "ThirdParties/ManiTests/include" }
+    includedirs { "ThirdParties/ManiZ/include" }
 
 project "Sandbox"
     kind "ConsoleApp"
