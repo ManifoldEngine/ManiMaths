@@ -5,14 +5,14 @@
 
 namespace Mani
 {
-	template<is_numeric T>
+	template<IsNumericType T>
 	struct Vector3
 	{
 		T x = static_cast<T>(0);
 		T y = static_cast<T>(0);
 		T z = static_cast<T>(0);
 
-		template<is_numeric T1, is_numeric T2>
+		template<IsNumericType T1, IsNumericType T2>
 		static bool isNearlyEqual(const Vector3<T1>& lhs, const Vector3<T2> rhs, double tolerance = FLT_EPSILON)
 		{
 			return	std::abs(lhs.x - rhs.x) <= tolerance &&
@@ -20,7 +20,7 @@ namespace Mani
 					std::abs(lhs.z - rhs.z) <= tolerance;
 		}
 
-		template<is_numeric T2>
+		template<IsNumericType T2>
 		bool isNearlyEqual(const Vector3<T2>& rhs, double tolerance = FLT_EPSILON)
 		{
 			return isNearlyEqual(*this, rhs, tolerance);
@@ -36,25 +36,25 @@ namespace Mani
 			return x * x + y * y + z * z;
 		}
 
-		template<is_numeric T1, is_numeric T2>
+		template<IsNumericType T1, IsNumericType T2>
 		static T distance(const Vector3<T1>& v1, const Vector3<T2>& v2)
 		{
 			return std::sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z));
 		}
 
-		template<is_numeric T2>
+		template<IsNumericType T2>
 		T distance(const Vector3<T2>& other) const
 		{
 			return distance(*this, other);
 		}
 
-		template<is_numeric T1, is_numeric T2>
+		template<IsNumericType T1, IsNumericType T2>
 		static T distanceSquared(const Vector3<T1>& v1, const Vector3<T2>& v2)
 		{
 			return (v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z);
 		}
 
-		template<is_numeric T2>
+		template<IsNumericType T2>
 		T distanceSquared(const Vector3<T2>& other) const
 		{
 			return distanceSquared(*this, other);
@@ -73,19 +73,19 @@ namespace Mani
 	typedef Vector3<unsigned int> Vector3ui;
 	typedef Vector3<unsigned long> Vector3ul;
 
-	template<is_numeric T1, is_numeric T2>
+	template<IsNumericType T1, IsNumericType T2>
 	bool operator==(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 	}
 
-	template<is_numeric T1, is_numeric T2>
+	template<IsNumericType T1, IsNumericType T2>
 	bool operator!=(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
 	}
 
-	template<is_numeric T1, is_numeric T2, is_numeric TReturn = T1>
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
 	Vector3<TReturn> operator+(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
@@ -95,7 +95,7 @@ namespace Mani
 		};
 	}
 
-	template<is_numeric T1, is_numeric T2, is_numeric TReturn = T1>
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
 	Vector3<TReturn> operator-(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
@@ -105,7 +105,7 @@ namespace Mani
 		};
 	}
 
-	template<is_numeric T1, is_numeric T2, is_numeric TReturn = T1>
+	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
 	Vector3<TReturn> operator*(const Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		return { 
@@ -115,7 +115,7 @@ namespace Mani
 		};
 	}
 
-	template<is_numeric T1, is_numeric T2>
+	template<IsNumericType T1, IsNumericType T2>
 	void operator+=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x += rhs.x;
@@ -123,7 +123,7 @@ namespace Mani
 		lhs.z += rhs.z;		
 	}
 
-	template<is_numeric T1, is_numeric T2>
+	template<IsNumericType T1, IsNumericType T2>
 	void operator-=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x -= rhs.x;
@@ -131,7 +131,7 @@ namespace Mani
 		lhs.z -= rhs.z;
 	}
 
-	template<is_numeric T1, is_numeric T2>
+	template<IsNumericType T1, IsNumericType T2>
 	void operator*=(Vector3<T1>& lhs, const Vector3<T2>& rhs)
 	{
 		lhs.x *= rhs.x;
@@ -139,7 +139,7 @@ namespace Mani
 		lhs.z *= rhs.z;
 	}
 
-	template<is_numeric T, is_numeric TScale, is_numeric TReturn = T>
+	template<IsNumericType T, IsNumericType TScale, IsNumericType TReturn = T>
 	Vector3<TReturn> operator*(const Vector3<T>& lhs, TScale scale)
 	{
 		return {
@@ -149,7 +149,7 @@ namespace Mani
 		};
 	}
 
-	template<is_numeric T, is_numeric TScale>
+	template<IsNumericType T, IsNumericType TScale>
 	void operator*=(Vector3<T>& lhs, TScale scale)
 	{
 		lhs.x *= scale;
@@ -157,7 +157,7 @@ namespace Mani
 		lhs.z *= scale;
 	}
 
-	template<is_numeric T, is_numeric TScale, is_numeric TReturn = T>
+	template<IsNumericType T, IsNumericType TScale, IsNumericType TReturn = T>
 	Vector3<TReturn> operator/(const Vector3<T>& lhs, TScale scale)
 	{
 		assert(scale != 0);
@@ -168,7 +168,7 @@ namespace Mani
 		};
 	}
 
-	template<is_numeric T, is_numeric TScale>
+	template<IsNumericType T, IsNumericType TScale>
 	void operator/=(Vector3<T>& lhs, TScale scale)
 	{
 		assert(scale != 0);
