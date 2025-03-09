@@ -189,59 +189,75 @@ namespace Mani
 		lhs.z /= scale;
 	}
 
-	constexpr Vector3<int>				VEC3I_ZERO		= {  0,  0,  0 };
-	constexpr Vector3<long>				VEC3L_ZERO		= {  0,  0,  0 };
-	constexpr Vector3<float>			VEC3F_ZERO		= {  0,  0,  0 };
-	constexpr Vector3<double>			VEC3D_ZERO		= {  0,  0,  0 };
-	constexpr Vector3<unsigned int>		VEC3UI_ZERO		= {  0,  0,  0 };
-	constexpr Vector3<unsigned long>	VEC3UL_ZERO		= {  0,  0,  0 };
+	namespace VECTOR3I
+	{
+		constexpr Vector3<int>			ZERO		= {  0,  0,  0 };
+		constexpr Vector3<int>			ONE			= {  1,  1,  1 };
+		constexpr Vector3<int>			RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<int>			LEFT		= { -1,  0,  0 };
+		constexpr Vector3<int>			UP			= {  0,  1,  0 };
+		constexpr Vector3<int>			DOWN		= {  0, -1,  0 };
+		constexpr Vector3<int>			FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<int>			BACK		= {  0,  0, -1 };
+	}
 
- 	constexpr Vector3<int>				VEC3I_ONE		= {  1,  1,  1 };
-	constexpr Vector3<long>				VEC3L_ONE		= {  1,  1,  1 };
-	constexpr Vector3<float>			VEC3F_ONE		= {  1,  1,  1 };
-	constexpr Vector3<double>			VEC3D_ONE		= {  1,  1,  1 };
-	constexpr Vector3<unsigned int>		VEC3UI_ONE		= {  1,  1,  1 };
-	constexpr Vector3<unsigned long>	VEC3UL_ONE		= {  1,  1,  1 };
+	namespace VECTOR3L
+	{
+		constexpr Vector3<long>			ZERO		= {  0,  0,  0 };
+		constexpr Vector3<long>			ONE			= {  1,  1,  1 };
+		constexpr Vector3<long>			RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<long>			LEFT		= { -1,  0,  0 };
+		constexpr Vector3<long>			UP			= {  0,  1,  0 };
+		constexpr Vector3<long>			DOWN		= {  0, -1,  0 };
+		constexpr Vector3<long>			FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<long>			BACK		= {  0,  0, -1 };
+	}
 
-	constexpr Vector3<int>				VEC3I_RIGHT		= {  1,  0,  0 };
-	constexpr Vector3<long>				VEC3L_RIGHT		= {  1,  0,  0 };
-	constexpr Vector3<float>			VEC3F_RIGHT		= {  1,  0,  0 };
-	constexpr Vector3<double>			VEC3D_RIGHT		= {  1,  0,  0 };
-	constexpr Vector3<unsigned int>		VEC3UI_RIGHT	= {  1,  0,  0 };
-	constexpr Vector3<unsigned long>	VEC3UL_RIGHT	= {  1,  0,  0 };
+	namespace VECTOR3F
+	{
+		constexpr Vector3<float>		ZERO		= {  0,  0,  0 };
+		constexpr Vector3<float>		ONE			= {  1,  1,  1 };
+		constexpr Vector3<float>		RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<float>		LEFT		= { -1,  0,  0 };
+		constexpr Vector3<float>		UP			= {  0,  1,  0 };
+		constexpr Vector3<float>		DOWN		= {  0, -1,  0 };
+		constexpr Vector3<float>		FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<float>		BACK		= {  0,  0, -1 };
+	}
 
-	constexpr Vector3<int>				VEC3I_LEFT		= { -1,  0,  0 };
-	constexpr Vector3<long>				VEC3L_LEFT		= { -1,  0,  0 };
-	constexpr Vector3<float>			VEC3F_LEFT		= { -1,  0,  0 };
-	constexpr Vector3<double>			VEC3D_LEFT		= { -1,  0,  0 };
-	constexpr Vector3<unsigned int>		VEC3UI_LEFT		= { -1,  0,  0 };
-	constexpr Vector3<unsigned long>	VEC3UL_LEFT		= { -1,  0,  0 };
+	namespace VECTOR3D
+	{
+		constexpr Vector3<double>		ZERO		= {  0,  0,  0 };
+		constexpr Vector3<double>		ONE			= {  1,  1,  1 };
+		constexpr Vector3<double>		RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<double>		LEFT		= { -1,  0,  0 };
+		constexpr Vector3<double>		UP			= {  0,  1,  0 };
+		constexpr Vector3<double>		DOWN		= {  0, -1,  0 };
+		constexpr Vector3<double>		FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<double>		BACK		= {  0,  0, -1 };
+	}
 
-	constexpr Vector3<int>				VEC3I_UP		= {  0,  1,  0 };
-	constexpr Vector3<long>				VEC3L_UP		= {  0,  1,  0 };
-	constexpr Vector3<float>			VEC3F_UP		= {  0,  1,  0 };
-	constexpr Vector3<double>			VEC3D_UP		= {  0,  1,  0 };
-	constexpr Vector3<unsigned int>		VEC3UI_UP		= {  0,  1,  0 };
-	constexpr Vector3<unsigned long>	VEC3UL_UP		= {  0,  1,  0 };
+	namespace VECTOR3UI
+	{
+		constexpr Vector3<unsigned int>		ZERO		= {  0,  0,  0 };
+		constexpr Vector3<unsigned int>		ONE			= {  1,  1,  1 };
+		constexpr Vector3<unsigned int>		RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<unsigned int>		LEFT		= { -1,  0,  0 };
+		constexpr Vector3<unsigned int>		UP			= {  0,  1,  0 };
+		constexpr Vector3<unsigned int>		DOWN		= {  0, -1,  0 };
+		constexpr Vector3<unsigned int>		FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<unsigned int>		BACK		= {  0,  0, -1 };
+	}
 
-	constexpr Vector3<int>				VEC3I_DOWN		= {  0, -1,  0 };
-	constexpr Vector3<long>				VEC3L_DOWN		= {  0, -1,  0 };
-	constexpr Vector3<float>			VEC3F_DOWN		= {  0, -1,  0 };
-	constexpr Vector3<double>			VEC3D_DOWN		= {  0, -1,  0 };
-	constexpr Vector3<unsigned int>		VEC3UI_DOWN		= {  0, -1,  0 };
-	constexpr Vector3<unsigned long>	VEC3UL_DOWN		= {  0, -1,  0 };
-
-	constexpr Vector3<int>				VEC3I_FORWARD	= { 0,  0,  1 };
-	constexpr Vector3<long>				VEC3L_FORWARD	= { 0,  0,  1 };
-	constexpr Vector3<float>			VEC3F_FORWARD	= { 0,  0,  1 };
-	constexpr Vector3<double>			VEC3D_FORWARD	= { 0,  0,  1 };
-	constexpr Vector3<unsigned int>		VEC3UI_FORWARD	= { 0,  0,  1 };
-	constexpr Vector3<unsigned long>	VEC3UL_FORWARD	= { 0,  0,  1 };
-
-	constexpr Vector3<int>				VEC3I_BACK		= { 0,  0, -1 };
-	constexpr Vector3<long>				VEC3L_BACK		= { 0,  0, -1 };
-	constexpr Vector3<float>			VEC3F_BACK		= { 0,  0, -1 };
-	constexpr Vector3<double>			VEC3D_BACK		= { 0,  0, -1 };
-	constexpr Vector3<unsigned int>		VEC3UI_BACK		= { 0,  0, -1 };
-	constexpr Vector3<unsigned long>	VEC3UL_BACK		= { 0,  0, -1 };
+	namespace VECTOR3UL
+	{
+		constexpr Vector3<unsigned long>	ZERO		= {  0,  0,  0 };
+		constexpr Vector3<unsigned long>	ONE			= {  1,  1,  1 };
+		constexpr Vector3<unsigned long>	RIGHT		= {  1,  0,  0 };
+		constexpr Vector3<unsigned long>	LEFT		= { -1,  0,  0 };
+		constexpr Vector3<unsigned long>	UP			= {  0,  1,  0 };
+		constexpr Vector3<unsigned long>	DOWN		= {  0, -1,  0 };
+		constexpr Vector3<unsigned long>	FORWARD		= {  0,  0,  1 };
+		constexpr Vector3<unsigned long>	BACK		= {  0,  0, -1 };
+	}
 }

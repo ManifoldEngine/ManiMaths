@@ -220,6 +220,13 @@ namespace Mani
 		lhs.w *= scale;
 	}
 
-	constexpr Quatf QUATF_IDENTITY = { 0, 0, 0, 1 };
-	constexpr Quatd QUATD_IDENTITY = { 0, 0, 0, 1 };
+	namespace QUATF
+	{
+		constexpr Quatf IDENTITY = { 0, 0, 0, 1 };
+	}
+
+	namespace QUATD
+	{
+		constexpr Quatd IDENTITY = { 0, 0, 0, 1 };
+	}
 }
