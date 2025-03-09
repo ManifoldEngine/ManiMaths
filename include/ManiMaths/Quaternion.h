@@ -102,7 +102,7 @@ namespace Mani
 		[[nodiscard]] static Quat<T> slerp(const Quat<T>& q1, const Quat<T>& q2, TTime t)
 		{
 			constexpr T _1		= static_cast<T>(1);
-			constexpr T _0_003	= static_cast<T>(0.001);
+			constexpr T _0_001	= static_cast<T>(0.001);
 			constexpr T _0_5	= static_cast<T>(0.5);
 
 			const T cosHalfTheta = dot(q1, q2);
@@ -112,7 +112,7 @@ namespace Mani
 			}
 
 			const T sinHalfTheta = sqrt(_1 - cosHalfTheta * cosHalfTheta);
-			if (abs(sinHalfTheta) < _0_003)
+			if (abs(sinHalfTheta) < _0_001)
 			{
 				// result is not fully defined
 				return q1 * _0_5 + q2 * _0_5;

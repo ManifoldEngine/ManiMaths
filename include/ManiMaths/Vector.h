@@ -39,14 +39,13 @@ namespace Mani
 
 		[[nodiscard]] Vector3<T> normalize() const
 		{
+			constexpr T _1 = static_cast<T>(1);
 			T l = length();
-			MANIMATHS_ASSERT(std::abs(l) > FLT_EPSILON);
-			const float inverseLength = 1 / l;
-			return {
-				x * inverseLength,
-				y * inverseLength,
-				z * inverseLength
-			};
+			if (l > 0)
+			{
+				return *this * (_1 / l);	
+			}
+			return *this;
 		}
 
 		template<IsNumeric T1, IsNumeric T2>
