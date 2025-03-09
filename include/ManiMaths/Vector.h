@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ManiMathsAssert.h"
+#include "Debug.h"
 #include "Traits.h"
 #include <cmath>
 
