@@ -2,6 +2,7 @@
 #include "ManiZ/ManiZ.h"
 
 #include "ManiMaths/Vector.h"
+#include "ManiMaths/Maths.h"
 
 MANI_SECTION_BEGIN(Vector, "Vector section")
 {
@@ -122,6 +123,11 @@ MANI_SECTION_BEGIN(Vector, "Vector section")
 			v1 /= 2;
 			MANI_TEST_ASSERT(v1.isNearlyEqual(expected), "v1 / 2 should equal expected");
 		}
+		{
+			const Mani::Vector3f v1 = { 1.f, 2.f, 3.f };
+			const Mani::Vector3f v1Normalized = v1.normalize();
+			MANI_TEST_ASSERT(Mani::abs(v1Normalized.length() - 1.f) < FLT_EPSILON, "Can normalize v1");
+		}
 	}
 
 	MANI_TEST(InterTypeMath, "Should be able to do math between different vector types")
@@ -143,8 +149,8 @@ MANI_SECTION_BEGIN(Vector, "Vector section")
 
 		constexpr float expectedSquared = 14.f;
 
-		MANI_TEST_ASSERT(std::abs(length - std::sqrt(expectedSquared)) <= FLT_EPSILON, "length should be equal to what is expected");
-		MANI_TEST_ASSERT(std::abs(lengthSquared - expectedSquared) <= FLT_EPSILON, "length should be equal to what is expected");
+		MANI_TEST_ASSERT(Mani::abs(length - std::sqrt(expectedSquared)) <= FLT_EPSILON, "length should be equal to what is expected");
+		MANI_TEST_ASSERT(Mani::abs(lengthSquared - expectedSquared) <= FLT_EPSILON, "length should be equal to what is expected");
 	}
 
 	MANI_TEST(DistanceMaths, "Should correctly compute the distance betweem 2 vectors")
@@ -159,11 +165,11 @@ MANI_SECTION_BEGIN(Vector, "Vector section")
 		const float v2tov1squared = v2.distanceSquared(v1);
 
 		constexpr float expectedSquared = 3.f;
-		MANI_TEST_ASSERT(std::abs(v1tov2 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
-		MANI_TEST_ASSERT(std::abs(v2tov1 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(Mani::abs(v1tov2 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(Mani::abs(v2tov1 - std::sqrt(expectedSquared)) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
 
-		MANI_TEST_ASSERT(std::abs(v1tov2squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
-		MANI_TEST_ASSERT(std::abs(v2tov1squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(Mani::abs(v1tov2squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
+		MANI_TEST_ASSERT(Mani::abs(v2tov1squared - expectedSquared) <= FLT_EPSILON, "v1 should be at 1 unit from v2");
 	}
 
 	MANI_TEST(ToString, "Should output a properly formatted string")

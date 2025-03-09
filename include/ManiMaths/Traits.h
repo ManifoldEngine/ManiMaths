@@ -5,5 +5,8 @@
 namespace Mani
 {
 	template<typename T>
-	concept IsNumericType = std::is_arithmetic<T>::value;
+	concept IsNumeric = std::is_arithmetic<T>::value;
+
+	template<typename T>
+	concept IsInteger = std::is_integral<T>::value;
 }

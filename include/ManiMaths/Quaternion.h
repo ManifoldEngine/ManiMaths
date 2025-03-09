@@ -1,51 +1,154 @@
 #pragma once
 
+#include "ManiMathsAssert.h"
 #include "Traits.h"
-#include <cmath>
+#include "Maths.h"
 
 namespace Mani
 {
-	template<IsNumericType T>
+	template<IsNumeric T>
 	struct Quat
 	{
 		T x = static_cast<T>(0);
 		T y = static_cast<T>(0);
 		T z = static_cast<T>(0);
-		T w = static_cast<T>(0);
+		T w = static_cast<T>(1);
 
-		template<IsNumericType T1, IsNumericType T2>
-		static bool isNearlyEqual(const Quat<T1>& lhs, const Quat<T2> rhs, double tolerance = FLT_EPSILON)
+		template<IsNumeric T1, IsNumeric T2>
+		[[nodiscard]] static bool isNearlyEqual(const Quat<T1>& lhs, const Quat<T2> rhs, double tolerance = FLT_EPSILON)
 		{
-			return	std::abs(lhs.x - rhs.x) <= tolerance &&
-				std::abs(lhs.y - rhs.y) <= tolerance &&
-				std::abs(lhs.z - rhs.z) <= tolerance &&
-				std::abs(lhs.w - rhs.w) <= tolerance;
+			return	abs(lhs.x - rhs.x) <= tolerance &&
+					abs(lhs.y - rhs.y) <= tolerance &&
+					abs(lhs.z - rhs.z) <= tolerance &&
+					abs(lhs.w - rhs.w) <= tolerance;
 		}
 
-		template<IsNumericType T2>
-		bool isNearlyEqual(const Quat<T2>& rhs, double tolerance = FLT_EPSILON)
+		template<IsNumeric T2>
+		[[nodiscard]] bool isNearlyEqual(const Quat<T2>& rhs, double tolerance = FLT_EPSILON) const
 		{
 			return isNearlyEqual(*this, rhs, tolerance);
+		}
+
+		[[nodiscard]] Quat<T> conjugate() const
+		{
+			return { -x, -y, -z, w };
+		}
+
+		[[nodiscard]] T length() const
+		{
+			return std::sqrt(x * x + y * y + z * z + w * w);
+		}
+
+		[[nodiscard]] T lengthSquared() const
+		{
+			return x * x + y * y + z * z + w * w;
+		}
+
+		[[nodiscard]] Quat<T> normalize() const
+		{
+			constexpr T _1 = static_cast<T>(1);
+			const float l = length();
+			if (l > 0)
+			{
+				return *this * (_1 / l);
+			}
+			return *this;
+		}
+
+		template<IsNumeric T1, IsNumeric T2>
+		[[nodiscard]] static T dot(const Quat<T1>& q1, const Quat<T2>& q2)
+		{
+			return	q1.x * q2.x +
+					q1.y * q2.y +
+					q1.z * q2.z + 
+					q1.w * q2.w;
+		}
+
+		template<IsNumeric T2>
+		[[nodiscard]] T dot(const Quat<T2>& other) const
+		{
+			return dot(*this, other);
+		}
+
+		template<IsNumeric T1, IsNumeric T2>
+		[[nodiscard]] static T angleRad(const Quat<T1>& q1, const Quat<T2>& q2)
+		{
+			constexpr T _2 = static_cast<T>(2);
+			const T1 q1Length = q1.length();
+			const T2 q2Length = q2.length();
+			MANIMATHS_ASSERT(abs(q1Length) > 0 && abs(q2Length) > 0);
+			return _2 * acos(dot(q1, q2) / (q1Length * q2Length));
+		}
+
+		template<IsNumeric T2>
+		[[nodiscard]] T angleRad(const Quat<T2>& other) const
+		{
+			return angleRad(*this, other);
+		}
+
+		template<IsNumeric T1, IsNumeric T2>
+		[[nodiscard]] static T angleDeg(const Quat<T1>& q1, const Quat<T2>& q2)
+		{
+			return Mani::radToDeg(angleRad(q1, q2));
+		}
+
+		template<IsNumeric T2>
+		[[nodiscard]] T angleDeg(const Quat<T2>& other) const
+		{
+			return Mani::radToDeg(angleRad(*this, other));
+		}
+				
+		template<IsNumeric TTime>
+		[[nodiscard]] static Quat<T> slerp(const Quat<T>& q1, const Quat<T>& q2, TTime t)
+		{
+			constexpr T _1		= static_cast<T>(1);
+			constexpr T _0_003	= static_cast<T>(0.001);
+			constexpr T _0_5	= static_cast<T>(0.5);
+
+			const T cosHalfTheta = dot(q1, q2);
+			if (abs(cosHalfTheta) >= _1)
+			{
+				return q1;
+			}
+
+			const T sinHalfTheta = sqrt(_1 - cosHalfTheta * cosHalfTheta);
+			if (abs(sinHalfTheta) < _0_003)
+			{
+				// result is not fully defined
+				return q1 * _0_5 + q2 * _0_5;
+			}
+
+			const T halfTheta = acos(cosHalfTheta);
+
+			const T ta = sin((_1 - t) * halfTheta) / sinHalfTheta;
+			const T tb = sin(t * halfTheta) / sinHalfTheta;
+
+			return q1 * ta + q2 * tb;
+		}
+
+		[[nodiscard]] std::string toString() const
+		{
+			return std::format("({}, {}, {}, {})", x, y, z, w);
 		}
 	};
 
 	typedef Quat<float> Quatf;
 	typedef Quat<double> Quatd;
 
-	template<IsNumericType T1, IsNumericType T2>
-	bool operator==(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	template<IsNumeric T1, IsNumeric T2>
+	[[nodiscard]] bool operator==(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
 	}
 
-	template<IsNumericType T1, IsNumericType T2>
-	bool operator!=(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	template<IsNumeric T1, IsNumeric T2>
+	[[nodiscard]] bool operator!=(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z || lhs.w != rhs.w;
 	}
 
-	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
-	Quat<TReturn> operator+(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
+	[[nodiscard]] Quat<TReturn> operator+(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return {
 			lhs.x + rhs.x,
@@ -55,8 +158,8 @@ namespace Mani
 		};
 	}
 
-	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
-	Quat<TReturn> operator-(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
+	[[nodiscard]] Quat<TReturn> operator-(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return {
 			lhs.x - rhs.x,
@@ -66,9 +169,27 @@ namespace Mani
 		};
 	}
 
+	template<IsNumeric T1, IsNumeric T2>
+	void operator+=(Quat<T1>& lhs, const Quat<T2>& rhs)
+	{
+		lhs.x += rhs.x;
+		lhs.y += rhs.y;
+		lhs.z += rhs.z;
+		lhs.w += rhs.w;
+	}
+
+	template<IsNumeric T1, IsNumeric T2>
+	void operator-=(Quat<T1>& lhs, const Quat<T2>& rhs)
+	{
+		lhs.x -= rhs.x;
+		lhs.y -= rhs.y;
+		lhs.z -= rhs.z;
+		lhs.w -= rhs.w;
+	}
+
 	// Hamilton product
-	template<IsNumericType T1, IsNumericType T2, IsNumericType TReturn = T1>
-	Quat<TReturn> operator*(const Quat<T1>& lhs, const Quat<T2> rhs)
+	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
+	[[nodiscard]] Quat<TReturn> operator*(const Quat<T1>& lhs, const Quat<T2> rhs)
 	{
 		return {
 			lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y,
@@ -77,4 +198,28 @@ namespace Mani
 			lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z
 		};
 	}
+
+	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
+	[[nodiscard]] Quat<TReturn> operator*(const Quat<T>& lhs, TScale scale)
+	{
+		return { lhs.x * scale, lhs.y * scale, lhs.z * scale, lhs.w * scale };
+	}
+
+	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
+	[[nodiscard]] Quat<TReturn> operator*(TScale scale, const Quat<T>& rhs)
+	{
+		return { rhs.x * scale, rhs.y * scale, rhs.z * scale, rhs.w * scale };
+	}
+
+	template<IsNumeric T, IsNumeric TScale>
+	void operator*=(Quat<T>& lhs, TScale scale)
+	{
+		lhs.x *= scale;
+		lhs.y *= scale;
+		lhs.z *= scale;
+		lhs.w *= scale;
+	}
+
+	constexpr Quatf QUATF_IDENTITY = { 0, 0, 0, 1 };
+	constexpr Quatd QUATD_IDENTITY = { 0, 0, 0, 1 };
 }

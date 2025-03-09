@@ -2,6 +2,8 @@
 #include "ManiZ/ManiZ.h"
 
 #include "ManiMaths/Quaternion.h"
+#include "ManiMaths/QuaternionMaths.h"
+#include "ManiMaths/Maths.h"
 
 MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 {
@@ -40,44 +42,20 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 			Mani::Quatf q2 = { 3, 5, 2, 1 };
 			Mani::Quatf expected = { 14, 18, 5, -25 };
 			MANI_TEST_ASSERT((q1 * q2) == expected, "q1 * q2 should equal expected");
-			MANI_TEST_ASSERT((q2 * q1) != expected, "product is not commutative.");
-		}
-		/* {
-			Mani::Vector3i v1 = { 1, 2, 3 };
-			Mani::Vector3i v2 = { 4, 5, 6 };
-			Mani::Vector3i expected = { 5, 7, 9 };
-			v1 += v2;
-			MANI_TEST_ASSERT(v1 == expected, "v1 + v2 should equal expected");
+			MANI_TEST_ASSERT((q2 * q1) != expected, "quaternion product is not commutative.");
 		}
 		{
-			Mani::Vector3i v1 = { 1, 2, 3 };
-			Mani::Vector3i v2 = { 4, 5, 6 };
-			Mani::Vector3i expected = { 3, 3, 3 };
-			v2 -= v1;
-			MANI_TEST_ASSERT(v2 == expected, "v1 - v2 should equal expected");
+			Mani::Quatf q1 = { .1f, .2f, .3f, 1.f };
+			Mani::Quatf expected = { -.1f, -.2f, -.3f, 1.f };
+			MANI_TEST_ASSERT(q1.conjugate().isNearlyEqual(expected), "conguate should be -x, -y, -z, w");
 		}
 		{
-			Mani::Vector3i v1 = { 1, 2, 3 };
-			Mani::Vector3i v2 = { 4, 5, 6 };
-			Mani::Vector3i expected = { 4, 10, 18 };
-			v1 *= v2;
-			MANI_TEST_ASSERT(v1 == expected, "v1 * v2 should equal expected");
+			Mani::Quatf q1 = { 1, 2, 3, 4 };
+			Mani::Quatf expected = { 0.18257f, 0.36515f, 0.54772f, 0.7303f };
+			Mani::Quatf q1Normalized = q1.normalize();
+			constexpr float tolerance = .0001f;
+			MANI_TEST_ASSERT(expected.isNearlyEqual(q1Normalized, tolerance), "Should normalize properly");
 		}
-		{
-			Mani::Vector3i v1 = { 1, 2, 3 };
-			constexpr int scale = 2;
-			Mani::Vector3i expected = { 2, 4, 6 };
-
-			MANI_TEST_ASSERT(v1 * 2 == expected, "v1 * 2 should equal expected");
-		}
-		{
-			Mani::Vector3i v1 = { 1, 2, 3 };
-			constexpr int scale = 2;
-			Mani::Vector3i expected = { 2, 4, 6 };
-			v1 *= 2;
-			MANI_TEST_ASSERT(v1 == expected, "v1 * 2 should equal expected");
-		}
-		*/
 		{
 			Mani::Quatf q1 = { 1.f, 2.f, 3.f, 1.f };
 			Mani::Quatf q2 = { 4.f, 5.f, 6.f, 1.f };
@@ -86,21 +64,45 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 			MANI_TEST_ASSERT(q1.isNearlyEqual(q2) == false, "q1 is not equal to q2");
 			MANI_TEST_ASSERT(q1.isNearlyEqual(q3) == true, "q1 is equal to q3");
 		}
-		/*
-		{
-			Mani::Vector3f v1 = { 1.f, 2.f, 3.f };
-			constexpr int scale = 2;
-			Mani::Vector3f expected = { .5f, 1.f, 1.5f };
+	}
 
-			MANI_TEST_ASSERT((v1 / 2).isNearlyEqual(expected), "v1 / 2 should equal expected");
+	MANI_TEST(QuaternionToVectorOperations, "Should operate on vectors")
+	{
+		{
+			const Mani::Quatf q1 = Mani::fromAxisAngleDeg(90.0f, Mani::Vector3f{ 1.f, 0.f, 0.f });
+			const Mani::Vector3f v1 = Mani::VEC3F_UP;
+
+			const Mani::Vector3f rotatedVector = Mani::rotate(q1, v1);
+			const Mani::Vector3f expected = Mani::VEC3F_FORWARD;
+			MANI_TEST_ASSERT(rotatedVector.isNearlyEqual(expected), "Should rotate 1/4 around x axis");
+		}
+	}
+
+	MANI_TEST(QuaternionFunctionalities, "Various Quaternion functionalities")
+	{
+		{
+			const Mani::Quatf q1 = { 1.0f, 0.f, 0.f, 0.f };
+			const Mani::Quatf q2 = { 0.f, 1.f, 0.f, 0.f };
+
+			const float result = q1.angleDeg(q2);
+			MANI_TEST_ASSERT(Mani::isEqual(result, 180.f), "Should be about 90 degree");
 		}
 		{
-			Mani::Vector3f v1 = { 1.f, 2.f, 3.f };
-			constexpr int scale = 2;
-			Mani::Vector3f expected = { .5f, 1.f, 1.5f };
-			v1 /= 2;
-			MANI_TEST_ASSERT(v1.isNearlyEqual(expected), "v1 / 2 should equal expected");
-		}*/
+			const Mani::Quatf q1 = { 1.0f, 0.f, 0.f, 0.f };
+			const Mani::Quatf q2 = { 0.f, 1.f, 0.f, 0.f };
+
+			const float result = q1.angleDeg(q2);
+			MANI_TEST_ASSERT(Mani::isEqual(result, 180.f), "Should be about 90 degree");
+		}
+		{
+			const Mani::Quatf q1 = { 1.0f, 0.f, 0.f, 0.f };
+			const Mani::Quatf q2 = { 0.f, 1.f, 0.f, 0.f };
+
+			const Mani::Quatf result1 = Mani::Quatf::slerp(q1, q2, 0.f);
+			const Mani::Quatf result2 = Mani::Quatf::slerp(q1, q2, 1.f);
+			MANI_TEST_ASSERT(q1.isNearlyEqual(result1), "no slerp should be equal to q1");
+			MANI_TEST_ASSERT(q2.isNearlyEqual(result2), "full slerp should be equal to q2");
+		}
 	}
 }
 MANI_SECTION_END(Quaternion)
