@@ -81,7 +81,7 @@ namespace Mani
 	typedef Vec3<int>			Vec3i;
 	typedef Vec3<long>			Vec3l;
 	typedef Vec3<float>			Vec3f;
-	typedef Vec3<double>			Vec3d;
+	typedef Vec3<double>		Vec3d;
 	typedef Vec3<unsigned int>	Vec3ui;
 	typedef Vec3<unsigned long>	Vec3ul;
 

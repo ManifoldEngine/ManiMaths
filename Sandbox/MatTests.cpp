@@ -12,7 +12,7 @@ MANI_SECTION_BEGIN(Matrix, "Enter the Matrix")
 			Mani::Mat<float, 4, 4> m1;
 			const std::string jsonString = ManiZ::to::json(m1);
 			Mani::Mat<float, 4, 4> m2 = ManiZ::from::json<Mani::Mat<float, 4, 4>>(jsonString);
-			//MANI_TEST_ASSERT(q1 == q2, "q1 should equal q2 after going through ManiZ serialization/deserialization.");
+			MANI_TEST_ASSERT(m1 == m2, "m1 should equal m2 after going through ManiZ serialization/deserialization.");
 		}
 	}
 }
