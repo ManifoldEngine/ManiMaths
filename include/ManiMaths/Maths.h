@@ -49,6 +49,18 @@ namespace Mani
 		return std::pow(v, p);
 	}
 
+	template <IsNumeric T1>
+	[[nodiscard]] constexpr T1 min(T1 lhs, T1 rhs)
+	{
+		return lhs <= rhs ? lhs : rhs;
+	}
+
+	template <IsNumeric T1>
+	[[nodiscard]] constexpr T1 max(T1 lhs, T1 rhs)
+	{
+		return lhs >= rhs ? lhs : rhs;
+	}
+
 	template<IsNumeric T1, IsNumeric T2, IsNumeric T3 = float>
 	[[nodiscard]] bool isEqual(T1 v1, T2 v2, T3 tolerance = FLT_EPSILON)
 	{

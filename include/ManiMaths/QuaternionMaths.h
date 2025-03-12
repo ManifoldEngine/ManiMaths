@@ -1,23 +1,20 @@
 #pragma once
 
 #include "Traits.h"
-#include "Quaternion.h"
-#include "Vector.h"
+#include "Quat.h"
+#include "Vec3.h"
 #include "Maths.h"
 
 namespace Mani
 {
-	template<IsNumeric T>
-	[[nodiscard]] Vec3<T> convert(const Quat<T>& q) { return { q.x, q.y, q.z }; }
-
 	// https://raw.org/proof/vector-rotation-using-quaternions/
 	template<IsNumeric T1, IsNumeric T2 = T1, IsNumeric TReturn = T1>
-	[[nodiscard]] Vec3<TReturn> rotate(const Quat<T1>& q, const Vec3<T2>& v)
+	[[nodiscard]] Vec<TReturn, 3> rotate(const Quat<T1>& q, const Vec<T2, 3>& v)
 	{
 		constexpr T1 _2 = static_cast<T1>(2);
 
 		// t = 2q x v
-		const Vec3<T1> t = {
+		const Vec<T1, 3> t = {
 			_2 * (q.y * v.z - q.z * v.y),
 			_2 * (q.z * v.x - q.x * v.z),
 			_2 * (q.x * v.y - q.y * v.x)
@@ -32,7 +29,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	[[nodiscard]] Quat<T> fromAxisAngleRad(T angle, Vec3<T> axis)
+	[[nodiscard]] Quat<T> fromAxisAngleRad(T angle, Vec<T, 3> axis)
 	{
 		constexpr T _2 = 2;
 		const T cosHalfAngle = cos(angle / _2);
@@ -47,7 +44,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	[[nodiscard]] Quat<T> fromAxisAngleDeg(T angle , Vec3<T> axis)
+	[[nodiscard]] Quat<T> fromAxisAngleDeg(T angle , Vec<T, 3> axis)
 	{
 		return fromAxisAngleRad<T>(degToRad(angle), axis);
 	}
