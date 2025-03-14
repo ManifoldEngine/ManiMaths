@@ -84,7 +84,8 @@ namespace Mani
 		}
 
 		operator Vec<T, 3>() const { return { x, y, static_cast<T>(0) }; }
-		operator Vec<T, 4>() const { return { x, y, static_cast<T>(0), static_cast<T>(1) }; }
+		operator Vec<T, 4>() const { return { x, y, static_cast<T>(0), static_cast<T>(0) }; }
+		Vec<T, 4> homogenous() const { return { x, y, static_cast<T>(0), static_cast<T>(1) }; }
 
 		[[nodiscard]] std::string toString() const
 		{
