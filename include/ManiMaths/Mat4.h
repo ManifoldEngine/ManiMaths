@@ -1,6 +1,7 @@
 #pragma once
 
 #include "_Mat.h"
+#include "_Vec.h"
 #include "Debug.h"
 #include "Traits.h"
 #include "Maths.h"
@@ -18,6 +19,30 @@ namespace Mani
 
 		MatLineView<T, 4>		operator[](Size i)			{ return MatLineView<T, 4>{ &this->_00, i }; };
 		const MatLineView<T, 4>	operator[](Size i) const	{ return MatLineView<T, 4>{ &this->_00, i }; };
+
+		Vec<T, 4> getLineAt(Size i) const
+		{
+			switch (i)
+			{
+				case 0: return { _00, _01, _02, _03 };
+				case 1: return { _10, _11, _12, _13 };
+				case 2: return { _20, _21, _22, _23 };
+				case 3: return { _30, _31, _32, _33 };
+				default: MANIMATHS_ASSERT(false); // bad access
+			}
+		}
+
+		void setLineAt(Size i, const Vec<T, 4>& v)
+		{
+			switch (i)
+			{
+				case 0: _00 = v.x; _01 = v.y; _02 = v.z; _03 = v.w; break;
+				case 1: _10 = v.x; _11 = v.y; _12 = v.z; _13 = v.w; break;
+				case 2: _20 = v.x; _21 = v.y; _22 = v.z; _23 = v.w; break;
+				case 3: _30 = v.x; _31 = v.y; _32 = v.z; _33 = v.w; break;
+				default: MANIMATHS_ASSERT(false); // bad access
+			}
+		}
 
 		static Mat<T, 4, 4> make(T v) 
 		{
@@ -127,6 +152,15 @@ namespace Mani
 		bool isNearlyEqual(const Mat<T2, 4, 4>& other, double tolerance = FLT_EPSILON) const
 		{
 			return isNearlyEqual(*this, other, tolerance);
+		}
+
+		operator Mat<T, 3, 3>() const
+		{
+			return {
+				_00, _01, _02,
+				_10, _11, _12,
+				_20, _21, _22,
+			};
 		}
 
 		std::string toString() const
@@ -247,6 +281,17 @@ namespace Mani
 			lhs._10 * rhs, lhs._11 * rhs, lhs._12 * rhs, lhs._13 * rhs,
 			lhs._20 * rhs, lhs._21 * rhs, lhs._22 * rhs, lhs._23 * rhs,
 			lhs._30 * rhs, lhs._31 * rhs, lhs._32 * rhs, lhs._33 * rhs
+		};
+	}
+
+	template<IsNumeric T>
+	Mat<T, 4, 4> operator*(T lhs, const Mat<T, 4, 4>& rhs)
+	{
+		return Mat<T, 4, 4>{
+			rhs._00 * lhs, rhs._01* lhs, rhs._02 * lhs, rhs._03* lhs,
+			rhs._10 * lhs, rhs._11* lhs, rhs._12 * lhs, rhs._13* lhs,
+			rhs._20 * lhs, rhs._21* lhs, rhs._22 * lhs, rhs._23* lhs,
+			rhs._30 * lhs, rhs._31* lhs, rhs._32 * lhs, rhs._33* lhs
 		};
 	}
 

@@ -102,6 +102,10 @@ namespace Mani
 			return cross(*this, other);
 		}
 
+		operator Vec<T, 2>() const { return { x, y }; }
+		operator Vec<T, 4>() const { return { x, y, z, static_cast<T>(0) }; }
+		Vec<T, 4> homogenous() const { return { x, y, z, static_cast<T>(1) }; }
+
 		[[nodiscard]] std::string toString() const
 		{
 			return std::format("({}, {}, {})", x, y, z);
@@ -188,6 +192,16 @@ namespace Mani
 			lhs.x * scale,
 			lhs.y * scale,
 			lhs.z * scale,
+		};
+	}
+
+	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
+	Vec<TReturn, 3> operator*(TScale scale, const Vec<T, 3>& rhs)
+	{
+		return {
+			rhs.x * scale,
+			rhs.y * scale,
+			rhs.z * scale,
 		};
 	}
 

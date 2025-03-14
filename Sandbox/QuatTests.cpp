@@ -2,7 +2,7 @@
 #include "ManiZ/ManiZ.h"
 
 #include "ManiMaths/Quat.h"
-#include "ManiMaths/QuaternionMaths.h"
+#include "ManiMaths/QuatTransforms.h"
 #include "ManiMaths/Maths.h"
 
 MANI_SECTION_BEGIN(Quaternion, "Quaternion section")

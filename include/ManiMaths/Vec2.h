@@ -83,6 +83,9 @@ namespace Mani
 			return dot(*this, other);
 		}
 
+		operator Vec<T, 3>() const { return { x, y, static_cast<T>(0) }; }
+		operator Vec<T, 4>() const { return { x, y, static_cast<T>(0), static_cast<T>(1) }; }
+
 		[[nodiscard]] std::string toString() const
 		{
 			return std::format("({}, {})", x, y);
@@ -162,6 +165,15 @@ namespace Mani
 		return {
 			lhs.x * scale,
 			lhs.y * scale
+		};
+	}
+
+	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
+	Vec<TReturn, 2> operator*(TScale scale, const Vec<T, 2>& rhs)
+	{
+		return {
+			rhs.x * scale,
+			rhs.y * scale
 		};
 	}
 
