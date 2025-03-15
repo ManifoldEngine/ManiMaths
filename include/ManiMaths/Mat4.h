@@ -432,6 +432,16 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
+	Vec<T, 4> operator*(const Vec<T, 4>& v, const Mat<T, 4, 4>& mat)
+	{
+		return {
+			mat._00 * v.x + mat._01 * v.y + mat._02 * v.z + mat._03,
+			mat._10 * v.x + mat._11 * v.y + mat._12 * v.z + mat._13,
+			mat._20 * v.x + mat._21 * v.y + mat._22 * v.z + mat._23
+		};
+	}
+
+	template<IsNumeric T>
 	Vec<T, 3> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 3>& v)
 	{
 		const Vec<T, 4> result = mat * v.homogenous();
