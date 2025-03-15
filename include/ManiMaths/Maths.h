@@ -26,6 +26,12 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
+	[[nodiscard]] T tan(T v)
+	{
+		return std::tan(v);
+	}
+
+	template<IsNumeric T>
 	[[nodiscard]] T acos(T v)
 	{
 		return std::acos(v);
@@ -35,6 +41,12 @@ namespace Mani
 	[[nodiscard]] T asin(T v)
 	{
 		return std::asin(v);
+	}
+
+	template<IsNumeric T>
+	[[nodiscard]] T atan(T v)
+	{
+		return std::atan(v);
 	}
 
 	template<IsNumeric T>

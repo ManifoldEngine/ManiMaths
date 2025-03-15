@@ -223,7 +223,7 @@ namespace Mani
 			return scale(*this, s);
 		}
 
-		static Mat<T, 4, 4> lookAt(const Vec<T, 3>& eye, const Vec<T, 3>& center, const Vec<T, 3>& up)
+		[[nodiscard]] static Mat<T, 4, 4> lookAt(const Vec<T, 3>& eye, const Vec<T, 3>& center, const Vec<T, 3>& up)
 		{
 			constexpr T _0 = static_cast<T>(0);
 			constexpr T _1 = static_cast<T>(1);
@@ -238,6 +238,24 @@ namespace Mani
 						 s.y,		  u.y,		 -f.y, _0,
 						 s.z,		  u.z,		 -f.z, _0,
 				 -s.dot(eye), -u.dot(eye), f.dot(eye), _1
+			};
+		}
+
+		[[nodiscard]] static Mat<T, 4, 4> perspective(T fov, T aspect, T zNear, T zFar)
+		{
+			constexpr T _0 = static_cast<T>(0);
+			constexpr T _1 = static_cast<T>(1);
+			constexpr T _2 = static_cast<T>(2);
+
+			MANIMATHS_ASSERT(!isEqual(aspect, _0));
+
+			const T tanHalffov = tan(fov / _2);
+
+			return {
+				_1 / (aspect * tanHalffov),				   _0,	 	     						  _0,  _0,
+				                        _0,	_1 / (tanHalffov),	 	     						  _0,  _0,
+				                        _0,	               _0,      -(zFar + zNear) / (zFar - zNear), -_1,
+				                        _0,	               _0, -(_2 * zFar * zNear) / (zFar - zNear),  _0,
 			};
 		}
 

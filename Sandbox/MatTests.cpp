@@ -347,6 +347,38 @@ MANI_SECTION_BEGIN(Matrix4x4, "Enter the Matrix")
             MANI_TEST_ASSERT(point.isNearlyEqual(expected, tolerance), "Point should be where it's expected.");
         }
     }
+
+    MANI_TEST(Mat4Perspective, "Should generate a valid perspective projection matrix")
+    {
+        // Define test parameters
+        const float fov = Mani::degToRad(90.0f); // 90 degrees field of view
+        const float aspect = 16.0f / 9.0f;       // Aspect ratio of 16:9
+        const float zNear = 0.1f;                // Near clipping plane
+        const float zFar = 100.0f;               // Far clipping plane
+
+        // Generate the perspective matrix
+        Mani::Mat4f perspectiveMatrix = Mani::Mat4f::perspective(fov, aspect, zNear, zFar);
+
+        // Expected values based on the perspective matrix formula
+        const float tanHalfFov = tanf(fov / 2.0f);
+        const float expected00 = 1.0f / (aspect * tanHalfFov);
+        const float expected11 = 1.0f / tanHalfFov;
+        const float expected22 = -(zFar + zNear) / (zFar - zNear);
+        const float expected23 = -1.0f;
+        const float expected32 = -(2.0f * zFar * zNear) / (zFar - zNear);
+
+        // Expected perspective matrix
+        Mani::Mat4f expected = {
+            expected00, 0.0f,      0.0f,      0.0f,
+            0.0f,      expected11, 0.0f,      0.0f,
+            0.0f,      0.0f,      expected22, expected23,
+            0.0f,      0.0f,      expected32, 0.0f
+        };
+
+        // Compare the generated matrix with the expected matrix
+        constexpr float tolerance = 0.00001f;
+        MANI_TEST_ASSERT(perspectiveMatrix.isNearlyEqual(expected, tolerance), "Perspective matrix should match the expected values.");
+    }
 }
 MANI_SECTION_END(Matrix4x4)
 
