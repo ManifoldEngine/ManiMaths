@@ -65,13 +65,13 @@ namespace Mani
 		}
 
 		template <IsNumeric T1>
-		[[nodiscard]] constexpr T1 min(T1 lhs, T1 rhs)
+		[[nodiscard]] constexpr T1 minT(T1 lhs, T1 rhs)
 		{
 			return lhs <= rhs ? lhs : rhs;
 		}
 
 		template <IsNumeric T1>
-		[[nodiscard]] constexpr T1 max(T1 lhs, T1 rhs)
+		[[nodiscard]] constexpr T1 maxT(T1 lhs, T1 rhs)
 		{
 			return lhs >= rhs ? lhs : rhs;
 		}
