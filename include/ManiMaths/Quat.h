@@ -306,4 +306,14 @@ namespace Mani
 		lhs.z *= scale;
 		lhs.w *= scale;
 	}
+
+	namespace QUATF
+	{
+		constexpr Quatf IDENTITY = { 0, 0, 0, 1 };
+	}
+
+	namespace QUATD
+	{
+		constexpr Quatd IDENTITY = { 0, 0, 0, 1 };
+	}
 }
