@@ -79,6 +79,13 @@ namespace Mani
 					abs(lhs._33 - rhs._33) <= tolerance;
 		}
 
+
+		template<IsNumeric T2>
+		bool isNearlyEqual(const Mat<T2, 4, 4>& other, double tolerance = FLT_EPSILON) const
+		{
+			return isNearlyEqual(*this, other, tolerance);
+		}
+
 		Mat<T, 4, 4> transpose() const
 		{
 			return {
@@ -147,12 +154,6 @@ namespace Mani
 			T c3 = _30 * s2 - _31 * s1 + _32 * s0;
 
 			return _13 * c0 - _03 * c1 + _33 * c2 - _23 * c3;
-		}
-
-		template<IsNumeric T2>
-		bool isNearlyEqual(const Mat<T2, 4, 4>& other, double tolerance = FLT_EPSILON) const
-		{
-			return isNearlyEqual(*this, other, tolerance);
 		}
 
 		operator Mat<T, 3, 3>() const
