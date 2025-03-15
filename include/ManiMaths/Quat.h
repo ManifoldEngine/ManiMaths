@@ -210,6 +210,18 @@ namespace Mani
 	typedef Quat<float> Quatf;
 	typedef Quat<double> Quatd;
 
+	template<IsNumeric T>
+	[[nodiscard]] Mat<T, 3, 3> toMat3(const Quat<T>& q)
+	{
+		return static_cast<Mat<T, 3, 3>>(q);
+	}
+
+	template<IsNumeric T>
+	[[nodiscard]] Mat<T, 4, 4> toMat4(const Quat<T>& q)
+	{
+		return toMat3(q);
+	}
+
 	template<IsNumeric T1, IsNumeric T2>
 	[[nodiscard]] bool operator==(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{

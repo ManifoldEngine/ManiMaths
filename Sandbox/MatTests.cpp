@@ -298,7 +298,7 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
             const Mani::Vec3f center = { 0.f, 0.f, -1.f };
             const Mani::Vec3f up = { 0.f, 1.f, 0.f };
 
-            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+            const Mani::Mat4f viewMatrix = Mani::Mat4f::lookAt(eye, center, up);
 
             // Transform the origin by the view matrix, should move to camera space
             Mani::Vec3f transformedOrigin = viewMatrix * Mani::VEC3F::ZERO;
@@ -313,7 +313,7 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
             const Mani::Vec3f center = { 0.f, 0.f, 0.f };
             const Mani::Vec3f up = { 0.f, 1.f, 0.f };
 
-            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+            const Mani::Mat4f viewMatrix = Mani::Mat4f::lookAt(eye, center, up);
             
             // Apply the view matrix to the eye position, should move it to (0,0,0) in view space
             Mani::Vec3f transformedEye = viewMatrix * eye;
@@ -328,7 +328,7 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
             const Mani::Vec3f center = { 0.f, 0.f, 0.f };
             const Mani::Vec3f up = { 0.f, 0.f, -1.f };  // Flipped up direction
 
-            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+            const Mani::Mat4f viewMatrix = Mani::Mat4f::lookAt(eye, center, up);
 
             // Apply the view matrix to the eye position, should move it to (0,0,0)
             Mani::Vec3f transformedEye = viewMatrix * eye;
