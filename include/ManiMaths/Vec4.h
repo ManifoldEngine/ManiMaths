@@ -19,10 +19,10 @@ namespace Mani
         template<IsNumeric T1, IsNumeric T2>
         [[nodiscard]] static bool isNearlyEqual(const Vec<T1, 4>& lhs, const Vec<T2, 4> rhs, double tolerance = FLT_EPSILON)
         {
-            return	abs(lhs.x - rhs.x) <= tolerance &&
-                    abs(lhs.y - rhs.y) <= tolerance &&
-                    abs(lhs.z - rhs.z) <= tolerance &&
-                    abs(lhs.w - rhs.w) <= tolerance;
+            return	Math::abs(lhs.x - rhs.x) <= tolerance &&
+                    Math::abs(lhs.y - rhs.y) <= tolerance &&
+                    Math::abs(lhs.z - rhs.z) <= tolerance &&
+                    Math::abs(lhs.w - rhs.w) <= tolerance;
         }
 
         template<IsNumeric T2>

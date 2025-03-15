@@ -202,7 +202,7 @@ MANI_SECTION_BEGIN(Matrix4x4, "Enter the Matrix")
             13, 14, 15, 16
         };
 
-        MANI_TEST_ASSERT(Mani::isEqual(m1.determinant(), 0.f), "should compute the correct determinant");
+        MANI_TEST_ASSERT(Mani::Math::isEqual(m1.determinant(), 0.f), "should compute the correct determinant");
     }
 
     MANI_TEST(Mat4Inverse, "Should calculate the inverse")
@@ -351,7 +351,7 @@ MANI_SECTION_BEGIN(Matrix4x4, "Enter the Matrix")
     MANI_TEST(Mat4Perspective, "Should generate a valid perspective projection matrix")
     {
         // Define test parameters
-        const float fov = Mani::degToRad(90.0f); // 90 degrees field of view
+        const float fov = Mani::Math::degToRad(90.0f); // 90 degrees field of view
         const float aspect = 16.0f / 9.0f;       // Aspect ratio of 16:9
         const float zNear = 0.1f;                // Near clipping plane
         const float zFar = 100.0f;               // Far clipping plane
@@ -592,7 +592,7 @@ MANI_SECTION_BEGIN(Matrix3x3, "Enter the Matrix 3x3")
             7, 8, 9
         };
 
-        MANI_TEST_ASSERT(Mani::isEqual(m1.determinant(), 0.f), "should compute the correct determinant");
+        MANI_TEST_ASSERT(Mani::Math::isEqual(m1.determinant(), 0.f), "should compute the correct determinant");
     }
 
     MANI_TEST(Mat3Inverse, "Should calculate the inverse")

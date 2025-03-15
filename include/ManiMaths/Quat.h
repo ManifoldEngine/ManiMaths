@@ -39,7 +39,7 @@ namespace Mani
 
 		[[nodiscard]] T length() const
 		{
-			return std::sqrt(x * x + y * y + z * z + w * w);
+			return Math::sqrt(x * x + y * y + z * z + w * w);
 		}
 
 		[[nodiscard]] T lengthSquared() const
@@ -92,20 +92,20 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2>
 		[[nodiscard]] static T angleDeg(const Quat<T1>& q1, const Quat<T2>& q2)
 		{
-			return Mani::radToDeg(angleRad(q1, q2));
+			return Mani::Math::radToDeg(angleRad(q1, q2));
 		}
 
 		template<IsNumeric T2>
 		[[nodiscard]] T angleDeg(const Quat<T2>& other) const
 		{
-			return Mani::radToDeg(angleRad(*this, other));
+			return Mani::Math::radToDeg(angleRad(*this, other));
 		}
 
 		[[nodiscard]] static Quat<T> axisAngle(T angle, Vec<T, 3> axis)
 		{
 			constexpr T _0_5 = static_cast<T>(0.5);
-			const T sinHalfAngle = sin(angle * _0_5);
-			const T cosHalfAngle = cos(angle * _0_5);
+			const T sinHalfAngle = Math::sin(angle * _0_5);
+			const T cosHalfAngle = Math::cos(angle * _0_5);
 			return {
 				axis.x * sinHalfAngle,
 				axis.y * sinHalfAngle,
@@ -116,7 +116,7 @@ namespace Mani
 
 		[[nodiscard]] static Quat<T> axisAngleDeg(T angle, Vec<T, 3> axis)
 		{
-			return axisAngle(degToRad(angle), axis);
+			return axisAngle(Math::degToRad(angle), axis);
 		}
 
 		// https://raw.org/proof/vector-rotation-using-quaternions/

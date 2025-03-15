@@ -85,14 +85,14 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 			const Mani::Quatf q2 = { 0.f, 1.f, 0.f, 0.f };
 
 			const float result = q1.angleDeg(q2);
-			MANI_TEST_ASSERT(Mani::isEqual(result, 180.f), "Should be about 90 degree");
+			MANI_TEST_ASSERT(Mani::Math::isEqual(result, 180.f), "Should be about 90 degree");
 		}
 		{
 			const Mani::Quatf q1 = { 1.0f, 0.f, 0.f, 0.f };
 			const Mani::Quatf q2 = { 0.f, 1.f, 0.f, 0.f };
 
 			const float result = q1.angleDeg(q2);
-			MANI_TEST_ASSERT(Mani::isEqual(result, 180.f), "Should be about 90 degree");
+			MANI_TEST_ASSERT(Mani::Math::isEqual(result, 180.f), "Should be about 90 degree");
 		}
 		{
 			const Mani::Quatf q1 = { 1.0f, 0.f, 0.f, 0.f };
