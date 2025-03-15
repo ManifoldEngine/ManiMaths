@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ManiMaths/Maths.h"
+
 #include "Mat3.h"
 #include "Mat4.h"
 

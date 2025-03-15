@@ -1,13 +1,7 @@
 #include "ManiTests/ManiTests.h"
 #include "ManiZ/ManiZ.h"
 
-#include "ManiMaths/Mat4.h"
-#include "ManiMaths/Mat3.h"
-#include "ManiMaths/MatTransforms.h"
-
-#include "ManiMaths/Vec3.h"
-
-#include "ManiMaths/Maths.h"
+#include "ManiMaths/Fwd.h"
 
 MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
 {
@@ -254,11 +248,9 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
     MANI_TEST(Mat4TranslateAndScale, "should compute translation and scale properly")
     {
         {
-            const Mani::Mat4f translation1 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::RIGHT * 5.f);
-            const Mani::Mat4f translation2 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::DOWN * 2.f);
-            const Mani::Mat4f translation3 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::FORWARD * 3.f);
-
-            const Mani::Mat4f translation = translation1 * translation2 * translation3;
+            const Mani::Mat4f translation = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::RIGHT * 5.f)
+                                                                 .translate(Mani::VEC3F::DOWN * 2.f)
+                                                                 .translate(Mani::VEC3F::FORWARD * 3.f);
 
             Mani::Vec3f point = translation * Mani::VEC3F::ZERO;
             Mani::Vec3f expected = { 5.f, -2.f, 3.f };
@@ -336,6 +328,23 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
 
             constexpr float tolerance = 0.00001f;
             MANI_TEST_ASSERT(transformedEye.isNearlyEqual(expectedEye, tolerance), "Eye position should transform to (0,0,0).");
+        }
+    }
+
+    MANI_TEST(Mat4TRS, "Should be cool to use")
+    {
+        {
+            const Mani::Mat4f transform = Mani::MAT4F::IDENTITY
+                .scale(Mani::VEC3F::ONE * 2.f)
+                .rotate(Mani::Quatf::axisAngleDeg(-90.f, Mani::VEC3F::UP))
+                .translate(Mani::VEC3F::RIGHT * 5.f)
+                .translate(Mani::VEC3F::DOWN * 2.f)
+                .translate(Mani::VEC3F::FORWARD * 3.f);
+
+            Mani::Vec3f point = transform * Mani::VEC3F::ZERO;
+            Mani::Vec3f expected = { -6.f, -4.f, 10.f };
+            constexpr float tolerance = 0.00001f;
+            MANI_TEST_ASSERT(point.isNearlyEqual(expected, tolerance), "Point should be where it's expected.");
         }
     }
 }

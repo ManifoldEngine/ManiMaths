@@ -2,6 +2,7 @@
 
 #include "_Mat.h"
 #include "_Vec.h"
+#include "Quat.h"
 #include "Debug.h"
 #include "Traits.h"
 #include "Maths.h"
@@ -173,9 +174,31 @@ namespace Mani
 			return r;
 		}
 
+		Mat<T, 4, 4>& translate(const Vec<T, 3>& v)
+		{
+			*this = translate(*this, v);
+			return *this;
+		}
+
 		Mat<T, 4, 4> translate(const Vec<T, 3>& v) const
 		{
 			return translate(*this, v);
+		}
+
+		static Mat<T, 4, 4> rotate(const Mat<T, 4, 4>& m, const Quat<T>& q)
+		{
+			return m * static_cast<Mat<T, 4, 4>>(q);
+		}
+
+		Mat<T, 4, 4>& rotate(const Quat<T>& q)
+		{
+			*this = *this * static_cast<Mat<T, 4, 4>>(q);
+			return *this;
+		}
+
+		Mat<T, 4, 4> rotate(const Quat<T>& q) const
+		{
+			return *this * static_cast<Mat<T, 4, 4>>(q);
 		}
 
 		static Mat<T, 4, 4> scale(const Mat<T, 4, 4>& mat, const Vec<T, 3>& s)
@@ -186,6 +209,12 @@ namespace Mani
 				mat._20 * s.z, mat._21 * s.z, mat._22 * s.z, mat._23 * s.z,
 				mat._30      , mat._31      , mat._32      , mat._33,
 			};
+		}
+
+		Mat<T, 4, 4>& scale(const Vec<T, 3>& s)
+		{
+			*this = scale(*this, s);
+			return *this;
 		}
 
 		Mat<T, 4, 4> scale(const Vec<T, 3>& s) const

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "_Mat.h"
+
 namespace Mani
 {
 	template<IsNumeric T>
