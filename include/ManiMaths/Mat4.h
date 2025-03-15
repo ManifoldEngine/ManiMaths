@@ -28,7 +28,7 @@ namespace Mani
 				case 1: return { _10, _11, _12, _13 };
 				case 2: return { _20, _21, _22, _23 };
 				case 3: return { _30, _31, _32, _33 };
-				default: MANIMATHS_ASSERT(false); // bad access
+				default: MANIMATHS_ASSERT(false); return {}; // bad access
 			}
 		}
 
@@ -161,6 +161,36 @@ namespace Mani
 				_10, _11, _12,
 				_20, _21, _22,
 			};
+		}
+
+		static Mat<T, 4, 4> translate(const Mat<T, 4, 4>& mat, const Vec<T, 3>& v)
+		{
+			Mat<T, 4, 4> r = mat;
+			r.setLineAt(3,	mat.getLineAt(0) * v.x +
+							mat.getLineAt(1) * v.y +
+							mat.getLineAt(2) * v.z +
+							mat.getLineAt(3));
+			return r;
+		}
+
+		Mat<T, 4, 4> translate(const Vec<T, 3>& v) const
+		{
+			return translate(*this, v);
+		}
+
+		static Mat<T, 4, 4> scale(const Mat<T, 4, 4>& mat, const Vec<T, 3>& s)
+		{
+			return {
+				mat._00 * s.x, mat._01 * s.x, mat._02 * s.x, mat._03 * s.x,
+				mat._10 * s.y, mat._11 * s.y, mat._12 * s.y, mat._13 * s.y,
+				mat._20 * s.z, mat._21 * s.z, mat._22 * s.z, mat._23 * s.z,
+				mat._30      , mat._31      , mat._32      , mat._33,
+			};
+		}
+
+		Mat<T, 4, 4> scale(const Vec<T, 3>& s) const
+		{
+			return scale(*this, s);
 		}
 
 		std::string toString() const
@@ -322,6 +352,24 @@ namespace Mani
 		lhs._10 /= rhs; lhs._11 /= rhs; lhs._12 /= rhs; lhs._13 /= rhs;
 		lhs._20 /= rhs; lhs._21 /= rhs; lhs._22 /= rhs; lhs._23 /= rhs;
 		lhs._30 /= rhs; lhs._31 /= rhs; lhs._32 /= rhs; lhs._33 /= rhs;
+	}
+
+	template<IsNumeric T>
+	Vec<T, 4> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 4>& v)
+	{
+		return {
+			mat._00 * v.x + mat._10 * v.y + mat._20 * v.z + mat._30 * v.w,
+			mat._01 * v.x + mat._11 * v.y + mat._21 * v.z + mat._31 * v.w,
+			mat._02 * v.x + mat._12 * v.y + mat._22 * v.z + mat._32 * v.w,
+			mat._03 * v.x + mat._13 * v.y + mat._23 * v.z + mat._33 * v.w
+		};
+	}
+
+	template<IsNumeric T>
+	Vec<T, 3> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 3>& v)
+	{
+		const Vec<T, 4> result = mat * v.homogenous();
+		return result / result.w;
 	}
 
 	namespace MAT4I

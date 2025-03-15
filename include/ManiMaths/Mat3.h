@@ -8,6 +8,17 @@ namespace Mani
 		T _00, _01, _02;
 		T _10, _11, _12;
 		T _20, _21, _22;
+
+		operator Mat<T, 4, 4>() {
+			constexpr T _0 = static_cast<T>(0);
+			constexpr T _1 = static_cast<T>(1);
+			return {
+				_00, _01, _02, _0,
+				_10, _11, _12, _0,
+				_20, _21, _22, _0,
+				 _0,  _0,  _0, _1,
+			};
+		}
 	};
 
 	typedef Mat<int,			3, 3> Mat3i;

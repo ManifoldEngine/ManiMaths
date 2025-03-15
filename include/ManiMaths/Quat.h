@@ -1,5 +1,7 @@
 #pragma once
 
+#include "_Vec.h"
+#include "_Mat.h"
 #include "Debug.h"
 #include "Traits.h"
 #include "Maths.h"
@@ -97,6 +99,49 @@ namespace Mani
 		{
 			return Mani::radToDeg(angleRad(*this, other));
 		}
+
+		[[nodiscard]] static Quat<T> axisAngle(T angle, Vec<T, 3> axis)
+		{
+			constexpr T _0_5 = static_cast<T>(0.5);
+			const T sinHalfAngle = sin(angle * _0_5);
+			const T cosHalfAngle = cos(angle * _0_5);
+			return {
+				axis.x * sinHalfAngle,
+				axis.y * sinHalfAngle,
+				axis.z * sinHalfAngle,
+				cosHalfAngle,
+			};
+		}
+
+		[[nodiscard]] static Quat<T> axisAngleDeg(T angle, Vec<T, 3> axis)
+		{
+			return axisAngle(degToRad(angle), axis);
+		}
+
+		// https://raw.org/proof/vector-rotation-using-quaternions/
+		[[nodiscard]] static Vec<T, 3> rotate(const Quat<T>& q, const Vec<T, 3>& v)
+		{
+			constexpr T _2 = static_cast<T>(2);
+
+			// t = 2q x v
+			const Vec<T, 3> t = {
+				_2 * (q.y * v.z - q.z * v.y),
+				_2 * (q.z * v.x - q.x * v.z),
+				_2 * (q.x * v.y - q.y * v.x)
+			};
+
+			// v + w t + q x t
+			return {
+				v.x + q.w * t.x + q.y * t.z - q.z * t.y,
+				v.y + q.w * t.y + q.z * t.x - q.x * t.z,
+				v.z + q.w * t.z + q.x * t.y - q.y * t.x,
+			};
+		}
+
+		[[nodiscard]] Vec<T, 3> rotate(const Vec<T, 3>& v) const
+		{
+			return rotate(*this, v);
+		}
 				
 		template<IsNumeric TTime>
 		[[nodiscard]] static Quat<T> slerp(const Quat<T>& q1, const Quat<T>& q2, TTime t)
@@ -124,6 +169,36 @@ namespace Mani
 			const T tb = sin(t * halfTheta) / sinHalfTheta;
 
 			return q1 * ta + q2 * tb;
+		}
+
+		operator Vec<T, 3>() const { return { x, y, z }; }
+		operator Vec<T, 4>() const { return { x, y, z, w }; }
+
+		operator Mat<T, 3, 3>() const
+		{
+			constexpr T _1 = static_cast<T>(1);
+			constexpr T _2 = static_cast<T>(2);
+
+			const T qxx = x * x;
+			const T qyy = y * y;
+			const T qzz = z * z;
+			const T qxz = x * z;
+			const T qxy = x * y;
+			const T qyz = y * z;
+			const T qwx = w * x;
+			const T qwy = w * y;
+			const T qwz = w * z;
+
+			return {
+				_1 - _2 * (qyy + qzz), _2 * (qxy + qwz), _2 * (qxz - qwy),
+				_2 * (qxy - qwz), _1 - _2 * (qxx + qzz), _2 * (qyz + qwx),
+				_2 * (qxz + qwy), _2 * (qyz - qwx), _1 - _2 * (qxx + qyy),
+			};
+		}
+
+		operator Mat<T, 4, 4>() const
+		{
+			return static_cast<Mat<T, 3, 3>>(*this);
 		}
 
 		[[nodiscard]] std::string toString() const

@@ -6,6 +6,7 @@
 #include "ManiMaths/MatTransforms.h"
 
 #include "ManiMaths/Vec3.h"
+
 #include "ManiMaths/Maths.h"
 
 MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
@@ -253,9 +254,9 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
     MANI_TEST(Mat4TranslateAndScale, "should compute translation and scale properly")
     {
         {
-            const Mani::Mat4f translation1 = Mani::translate(Mani::MAT4F::IDENTITY, Mani::VEC3F::RIGHT * 5.f);
-            const Mani::Mat4f translation2 = Mani::translate(Mani::MAT4F::IDENTITY, Mani::VEC3F::DOWN * 2.f);
-            const Mani::Mat4f translation3 = Mani::translate(Mani::MAT4F::IDENTITY, Mani::VEC3F::FORWARD * 3.f);
+            const Mani::Mat4f translation1 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::RIGHT * 5.f);
+            const Mani::Mat4f translation2 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::DOWN * 2.f);
+            const Mani::Mat4f translation3 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::FORWARD * 3.f);
 
             const Mani::Mat4f translation = translation1 * translation2 * translation3;
 
@@ -264,20 +265,77 @@ MANI_SECTION_BEGIN(Mat4, "Enter the Matrix")
             MANI_TEST_ASSERT(point.isNearlyEqual(expected), "Point should be where it's expected.");
         }
         {
-            const Mani::Mat4f withTranslation1 = Mani::translate(Mani::MAT4F::IDENTITY, Mani::VEC3F::RIGHT * 5.f);
-            const Mani::Mat4f withRotation1 = Mani::rotateDeg(withTranslation1, 45.f, Mani::VEC3F::FORWARD); // rotate along the Y axis
+            Mani::Vec3d expected = { 0.f, 0.f, 5.f };
+
+            const Mani::Mat4f withTranslation1 = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::RIGHT * 5.f);
+            const Mani::Quatf rotation = Mani::Quatf::axisAngleDeg(-90.f, Mani::Vec3f{ 0.f, 1.f, 0.f });
+
+            Mani::Vec3f p1 = rotation.rotate(withTranslation1 * Mani::VEC3F::ZERO);
+            // here we do R x T instead of T x R because we don't want rotation to apply on vector zero.
+            Mani::Vec3f p2 = Mani::toMat4(rotation) * withTranslation1 * Mani::VEC3F::ZERO;
             
-            Mani::Vec3f point = withRotation1 * Mani::VEC3F::ZERO;
-            Mani::Vec3f expected = { 0.f, 0.f, 5.f };
-            MANI_TEST_ASSERT(point.isNearlyEqual(expected), "Point should be where it's expected.");
+            constexpr float tolerance = 0.000001f;
+            MANI_TEST_ASSERT(p1.isNearlyEqual(expected, tolerance), "Point should be where it's expected.");
+            MANI_TEST_ASSERT(p2.isNearlyEqual(expected, tolerance), "Point should be where it's expected.");
         }
         {
-            const Mani::Mat4f withTranslation1 = Mani::translate(Mani::MAT4F::IDENTITY, Mani::VEC3F::RIGHT * 5.f);
-            const Mani::Mat4f withScale1 = Mani::scale(withTranslation1, Mani::VEC3F::ONE * 3.f);
+            const Mani::Mat4f translation = Mani::MAT4F::IDENTITY.translate(Mani::VEC3F::RIGHT * 5.f);
+            const Mani::Mat4f rotation = Mani::Quatf::axisAngleDeg(-90.f, Mani::Vec3f{ 0.f, 1.f, 0.f });
+            const Mani::Mat4f scale = Mani::MAT4F::IDENTITY.scale(Mani::VEC3F::ONE * 3.f);
 
-            Mani::Vec3f point = withScale1 * Mani::VEC3F::ZERO;
-            Mani::Vec3f expected = { 15.f, 0.f, 0.f };
-            MANI_TEST_ASSERT(point.isNearlyEqual(expected), "Point should be where it's expected.");
+            Mani::Vec3f point = scale * rotation * translation * Mani::VEC3F::ZERO;
+            Mani::Vec3f expected = { 0.f, 0.f, 15.f };
+            constexpr float tolerance = 0.000001f;
+            MANI_TEST_ASSERT(point.isNearlyEqual(expected, tolerance), "Point should be where it's expected.");
+        }
+    }
+
+    MANI_TEST(Mat4LookAt, "should compute view matrix properly")
+    {
+        {
+            // Looking straight down -Z axis
+            const Mani::Vec3f eye = { 0.f, 0.f, 0.f };
+            const Mani::Vec3f center = { 0.f, 0.f, -1.f };
+            const Mani::Vec3f up = { 0.f, 1.f, 0.f };
+
+            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+
+            // Transform the origin by the view matrix, should move to camera space
+            Mani::Vec3f transformedOrigin = viewMatrix * Mani::VEC3F::ZERO;
+            Mani::Vec3f expectedOrigin = { 0.f, 0.f, 0.f };
+
+            constexpr float tolerance = 0.00001f;
+            MANI_TEST_ASSERT(transformedOrigin.isNearlyEqual(expectedOrigin, tolerance), "Origin should remain at (0,0,0).");
+        }
+        {
+            // Camera positioned at (5, 2, 3), looking at (0, 0, 0), up is (0, 1, 0)
+            const Mani::Vec3f eye = { 5.f, 2.f, 3.f };
+            const Mani::Vec3f center = { 0.f, 0.f, 0.f };
+            const Mani::Vec3f up = { 0.f, 1.f, 0.f };
+
+            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+            
+            // Apply the view matrix to the eye position, should move it to (0,0,0) in view space
+            Mani::Vec3f transformedEye = viewMatrix * eye;
+            Mani::Vec3f expectedEye = { 0.f, 0.f, 0.f };
+
+            constexpr float tolerance = 0.00001f;
+            MANI_TEST_ASSERT(transformedEye.isNearlyEqual(expectedEye, tolerance), "Eye position should transform to (0,0,0).");
+        }
+        {
+            // Camera positioned at (0, 10, 0), looking at (0, 0, 0), up is (0, 0, -1)
+            const Mani::Vec3f eye = { 0.f, 10.f, 0.f };
+            const Mani::Vec3f center = { 0.f, 0.f, 0.f };
+            const Mani::Vec3f up = { 0.f, 0.f, -1.f };  // Flipped up direction
+
+            const Mani::Mat4f viewMatrix = Mani::lookAt(eye, center, up);
+
+            // Apply the view matrix to the eye position, should move it to (0,0,0)
+            Mani::Vec3f transformedEye = viewMatrix * eye;
+            Mani::Vec3f expectedEye = { 0.f, 0.f, 0.f };
+
+            constexpr float tolerance = 0.00001f;
+            MANI_TEST_ASSERT(transformedEye.isNearlyEqual(expectedEye, tolerance), "Eye position should transform to (0,0,0).");
         }
     }
 }

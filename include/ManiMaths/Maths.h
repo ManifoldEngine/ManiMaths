@@ -72,7 +72,8 @@ namespace Mani
 	{
 		constexpr T pi = static_cast<T>(PId);
 		constexpr T _180 = static_cast<T>(180);
-		return v * (pi / _180);
+		constexpr T pi_over_180 = pi / _180;
+		return v * pi_over_180;
 	}
 
 	template<IsNumeric T>
@@ -80,6 +81,7 @@ namespace Mani
 	{
 		constexpr T pi = static_cast<T>(PId);
 		constexpr T _180 = static_cast<T>(180);
-		return v * (_180 / pi);
+		constexpr T _180_over_pi = _180 / pi;
+		return v * _180_over_pi;
 	}
 }

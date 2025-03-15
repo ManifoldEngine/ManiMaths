@@ -2,7 +2,7 @@
 #include "ManiZ/ManiZ.h"
 
 #include "ManiMaths/Quat.h"
-#include "ManiMaths/QuatTransforms.h"
+#include "ManiMaths/Vec3.h"
 #include "ManiMaths/Maths.h"
 
 MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
@@ -69,10 +69,10 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 	MANI_TEST(QuaternionToVectorOperations, "Should operate on vectors")
 	{
 		{
-			const Mani::Quatf q1 = Mani::fromAxisAngleDeg(90.0f, Mani::Vec3f{ 1.f, 0.f, 0.f });
+			const Mani::Quatf q1 = Mani::Quatf::axisAngleDeg(90.0f, Mani::Vec3f{ 1.f, 0.f, 0.f });
 			const Mani::Vec3f v1 = Mani::VEC3F::UP;
 
-			const Mani::Vec3f rotatedVector = Mani::rotate<float, float>(q1, v1);
+			const Mani::Vec3f rotatedVector = Mani::Quatf::rotate(q1, v1);
 			const Mani::Vec3f expected = Mani::VEC3F::FORWARD;
 			MANI_TEST_ASSERT(rotatedVector.isNearlyEqual(expected), "Should rotate 1/4 around x axis");
 		}
