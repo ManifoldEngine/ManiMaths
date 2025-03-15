@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "Traits.h"
 #include "Maths.h"
+#include <format>
 
 namespace Mani
 {
