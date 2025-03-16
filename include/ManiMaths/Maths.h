@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Debug.h"
 #include "Traits.h"
 #include <cmath>
 
