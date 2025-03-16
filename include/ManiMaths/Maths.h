@@ -99,5 +99,12 @@ namespace Mani
 			constexpr T _180_over_pi = _180 / pi;
 			return v * _180_over_pi;
 		}
+
+		template<IsNumeric T>
+		[[nodiscard]] T linearRand(T min, T max)
+		{
+			MANIMATHS_ASSERT(Math::abs(max - min) > FLT_EPSILON);
+			return min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / (max - min)));
+		}
 	}
 }

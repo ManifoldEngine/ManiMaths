@@ -552,5 +552,12 @@ MANI_SECTION_BEGIN(Vec4, "Vector 4D section")
 
 		MANI_TEST_ASSERT(Mani::Math::isEqual(dot, 0.f), "dot should be 0");
 	}
+
+	MANI_TEST(ShouldGenerateRandomSphericalPoint, "ShouldGenerateRandomSphericalPoint")
+	{
+		constexpr float radius = 50.f;
+		const Mani::Vec3f point = Mani::Vec3f::sphericalRandom(radius);
+		MANI_TEST_ASSERT(Mani::Math::isEqual(point.length(), radius), "vector length should equal requested radius");
+	}
 }
 MANI_SECTION_END(Vec4)

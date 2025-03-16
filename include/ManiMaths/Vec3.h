@@ -102,6 +102,27 @@ namespace Mani
 			return cross(*this, other);
 		}
 
+		template<IsNumeric T>
+		[[nodiscard]] static Vec<T, 3> sphericalRandom(T radius)
+		{
+			constexpr T _2PI = static_cast<T>(Math::PId * 2);
+			constexpr T _0 = static_cast<T>(0);
+			constexpr T __1 = static_cast<T>(-1);
+			constexpr T _1 = static_cast<T>(1);
+			
+			MANIMATHS_ASSERT(radius > _0);
+
+			const float theta = Math::linearRand(_0, _2PI);
+			const float phi = Math::acos(Math::linearRand(__1, _1));
+
+			const Vec<T, 3> v = {
+				Math::sin(phi) * Math::cos(theta),
+				Math::sin(phi) * Math::sin(theta),
+				Math::cos(phi),
+			};
+			return v * radius;
+		}
+
 		operator Vec<T, 2>() const { return { x, y }; }
 		operator Vec<T, 4>() const { return { x, y, z, static_cast<T>(0) }; }
 		Vec<T, 4> homogenous() const { return { x, y, z, static_cast<T>(1) }; }
