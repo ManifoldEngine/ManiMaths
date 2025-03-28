@@ -379,6 +379,41 @@ MANI_SECTION_BEGIN(Matrix4x4, "Enter the Matrix")
         constexpr float tolerance = 0.00001f;
         MANI_TEST_ASSERT(perspectiveMatrix.isNearlyEqual(expected, tolerance), "Perspective matrix should match the expected values.");
     }
+
+    MANI_TEST(Mat4Orthographic, "Should generate a valid orthographic projection matrix")
+    {
+        // Define test parameters
+        const float left = -10.0f;
+        const float right = 10.0f;
+        const float bottom = -5.0f;
+        const float top = 5.0f;
+        const float zNear = 0.1f;
+        const float zFar = 100.0f;
+
+        // Generate the orthographic matrix
+        Mani::Mat4f orthoMatrix = Mani::Mat4f::orthographic(left, right, bottom, top, zNear, zFar);
+
+        // Expected values based on the orthographic matrix formula
+        const float expected00 = 2.0f / (right - left);
+        const float expected11 = 2.0f / (top - bottom);
+        const float expected22 = -2.0f / (zFar - zNear);
+        const float expected30 = -(right + left) / (right - left);
+        const float expected31 = -(top + bottom) / (top - bottom);
+        const float expected32 = -(zFar + zNear) / (zFar - zNear);
+        const float expected33 = 1.0f;
+
+        // Expected orthographic matrix
+        Mani::Mat4f expected = {
+            expected00, 0.0f,      0.0f,      0.0f,
+            0.0f,      expected11, 0.0f,      0.0f,
+            0.0f,      0.0f,      expected22, 0.0f,
+            expected30, expected31, expected32, expected33
+        };
+
+        // Compare the generated matrix with the expected matrix
+        constexpr float tolerance = 0.00001f;
+        MANI_TEST_ASSERT(orthoMatrix.isNearlyEqual(expected, tolerance), "Orthographic matrix should match the expected values.");
+    }
 }
 MANI_SECTION_END(Matrix4x4)
 

@@ -259,6 +259,20 @@ namespace Mani
 			};
 		}
 
+		[[nodiscard]] static Mat<T, 4, 4> orthographic(T left, T right, T bottom, T top, T zNear, T zFar)
+		{
+			constexpr T _0 = static_cast<T>(0);
+			constexpr T _1 = static_cast<T>(1);
+			constexpr T _2 = static_cast<T>(2);
+
+			return {
+							  _2 / (right - left),								  _0,								 _0, _0,
+											   _0,				 _2 / (top - bottom),								 _0, _0,
+											   _0,								  _0,			   -_2 / (zFar - zNear), _0,
+				 -(right + left) / (right - left),  -(top + bottom) / (top - bottom),  -(zFar + zNear) / (zFar - zNear), _1,
+			};
+		}
+
 		std::string toString() const
 		{
 			return std::format("({}, {}, {}, {})\n({}, {}, {}, {})\n({}, {}, {}, {})\n({}, {}, {}, {})",
