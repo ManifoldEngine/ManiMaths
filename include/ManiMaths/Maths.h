@@ -77,6 +77,12 @@ namespace Mani
 			return lhs >= rhs ? lhs : rhs;
 		}
 
+		template<IsNumeric T>
+		[[nodiscard]] T clamp(T value, T min, T max)
+		{
+			return minT(maxT(value, min), max);
+		}
+
 		template<IsNumeric T1, IsNumeric T2, IsNumeric T3 = float>
 		[[nodiscard]] bool isEqual(T1 v1, T2 v2, T3 tolerance = FLT_EPSILON)
 		{

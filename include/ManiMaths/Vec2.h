@@ -84,6 +84,20 @@ namespace Mani
 			return dot(*this, other);
 		}
 
+		[[nodiscard]] static Vec<T, 2> clamp(const Vec<T, 2>& v, T target)
+		{
+			if (v.length() > target)
+			{
+				return v.normalize() * target;
+			}
+			return v;
+		}
+
+		[[nodiscard]] Vec<T, 2> clamp(T target) const
+		{
+			return clamp(*this, target);
+		}
+
 		operator Vec<T, 3>() const { return { x, y, static_cast<T>(0) }; }
 		operator Vec<T, 4>() const { return { x, y, static_cast<T>(0), static_cast<T>(0) }; }
 		Vec<T, 4> homogenous() const { return { x, y, static_cast<T>(0), static_cast<T>(1) }; }

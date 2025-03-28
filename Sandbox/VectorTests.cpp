@@ -559,5 +559,37 @@ MANI_SECTION_BEGIN(Vec4, "Vector 4D section")
 		const Mani::Vec3f point = Mani::Vec3f::sphericalRandom(radius);
 		MANI_TEST_ASSERT(Mani::Math::isEqual(point.length(), radius), "vector length should equal requested radius");
 	}
+
+	MANI_TEST(ShouldProperlyClampEverything, "Should properly clamp all the expected value")
+	{
+		{
+			const Mani::Vec4f v4{ 100.f, 100.f, 100.f, 100.f };
+			const Mani::Vec4f v4Clamped = v4.clamp(4.f);
+			const Mani::Vec4f expected = { 2.f, 2.f, 2.f, 2.f };
+			MANI_TEST_ASSERT(v4Clamped.isNearlyEqual(expected), "Should be equal to expected value");
+		}
+		{
+			const Mani::Vec3f v3{ 100.f, 100.f, 100.f };
+			const Mani::Vec3f v3Clamped = v3.clamp(3.f);
+			const Mani::Vec3f expected = { 1.7320508075688776f, 1.7320508075688776f, 1.7320508075688776f };
+			MANI_TEST_ASSERT(v3Clamped.isNearlyEqual(expected), "Should be equal to expected value");
+		}
+		{
+			const Mani::Vec2f v2{ 100.f, 100.f };
+			const Mani::Vec2f v2Clamped = v2.clamp(4.f);
+			const Mani::Vec2f expected = { 2.82842731f, 2.82842731f };
+			MANI_TEST_ASSERT(v2Clamped.isNearlyEqual(expected), "Should be equal to expected value");
+		}
+		{
+			const float value = 5.f;
+			const float clamped = Mani::Math::clamp(value, 10.f, 20.f);
+			MANI_TEST_ASSERT(Mani::Math::isEqual(clamped, 10.f), "should be equal to expected value");
+		}
+		{
+			const float value = 25.f;
+			const float clamped = Mani::Math::clamp(value, 10.f, 20.f);
+			MANI_TEST_ASSERT(Mani::Math::isEqual(clamped, 20.f), "should be equal to expected value");
+		}
+	}
 }
 MANI_SECTION_END(Vec4)

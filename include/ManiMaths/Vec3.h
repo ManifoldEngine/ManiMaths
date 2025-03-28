@@ -102,6 +102,20 @@ namespace Mani
 			return cross(*this, other);
 		}
 
+		[[nodiscard]] static Vec<T, 3> clamp(const Vec<T, 3>& v, T target)
+		{
+			if (v.length() > target)
+			{
+				return v.normalize() * target;
+			}
+			return v;
+		}
+
+		[[nodiscard]] Vec<T, 3> clamp(T target) const
+		{
+			return clamp(*this, target);
+		}
+
 		template<IsNumeric T>
 		[[nodiscard]] static Vec<T, 3> sphericalRandom(T radius)
 		{
@@ -130,7 +144,7 @@ namespace Mani
 		[[nodiscard]] std::string toString() const
 		{
 			return std::format("({}, {}, {})", x, y, z);
-		}
+		}	
 	};
 
 	typedef Vec<int,			3> Vec3i;

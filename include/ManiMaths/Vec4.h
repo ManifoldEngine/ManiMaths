@@ -88,6 +88,20 @@ namespace Mani
             return dot(*this, other);
         }
 
+        [[nodiscard]] static Vec<T, 4> clamp(const Vec<T, 4>& v, T target)
+        {
+            if (v.length() > target)
+            {
+                return v.normalize() * target;
+            }
+            return v;
+        }
+
+        [[nodiscard]] Vec<T, 4> clamp(T target) const
+        {
+            return clamp(*this, target);
+        }
+
         operator Vec<T, 2>() const { return { x, y }; }
         operator Vec<T, 3>() const { return { x, y, z }; }
 
