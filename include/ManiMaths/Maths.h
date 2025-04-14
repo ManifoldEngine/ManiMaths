@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include "Traits.h"
 #include <cmath>
+#include <float.h>
 
 namespace Mani
 {
