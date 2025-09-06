@@ -265,6 +265,8 @@ namespace Mani
 			constexpr T _1 = static_cast<T>(1);
 			constexpr T _2 = static_cast<T>(2);
 
+			MANIMATHS_ASSERT(!Math::isEqual(left, right) && !Math::isEqual(bottom, top) && !Math::isEqual(zNear, zFar));
+
 			return {
 							  _2 / (right - left),								  _0,								 _0, _0,
 											   _0,				 _2 / (top - bottom),								 _0, _0,
