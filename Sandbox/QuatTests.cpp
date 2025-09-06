@@ -70,10 +70,10 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 	{
 		{
 			const Mani::Quatf q1 = Mani::Quatf::axisAngleDeg(90.0f, Mani::Vec3f{ 1.f, 0.f, 0.f });
-			const Mani::Vec3f v1 = Mani::VEC3F::UP;
+			const Mani::Vec3f v1 = Mani::Vec3f{ 0.0f, 1.0f, 0.0f };
 
 			const Mani::Vec3f rotatedVector = Mani::Quatf::rotate(q1, v1);
-			const Mani::Vec3f expected = Mani::VEC3F::FORWARD;
+			const Mani::Vec3f expected = Mani::Vec3f{ 0.0f, 0.0f, 1.0f };
 			MANI_TEST_ASSERT(rotatedVector.isNearlyEqual(expected), "Should rotate 1/4 around x axis");
 		}
 	}

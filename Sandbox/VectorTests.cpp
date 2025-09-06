@@ -183,14 +183,14 @@ MANI_SECTION_BEGIN(Vec3, "Vector section")
 
 	MANI_TEST(DotAndCrossVec3, "Should dot and cross 2 vec3")
 	{
-		Mani::Vec3f v1 = Mani::VEC3F::FORWARD;
-		Mani::Vec3f v2 = Mani::VEC3F::RIGHT;
+		Mani::Vec3f v1 = Mani::Vec3f{ 0.0f, 0.0f, 1.0f };
+		Mani::Vec3f v2 = Mani::Vec3f{ 1.0f, 0.0f, 0.0f };
 
 		const float dot = v1.dot(v2);
 		const Mani::Vec3f cross = v1.cross(v2);
 
 		MANI_TEST_ASSERT(Mani::Math::isEqual(dot, 0.f), "dot should be 0");
-		MANI_TEST_ASSERT(cross.isNearlyEqual(Mani::VEC3F::UP), "cross should be equal to up");
+		MANI_TEST_ASSERT(cross.isNearlyEqual(Mani::Vec3f{ 0.0f, 1.0f, 0.0f }), "cross should be equal to up");
 	}
 }
 MANI_SECTION_END(Vec3)
@@ -545,8 +545,8 @@ MANI_SECTION_BEGIN(Vec4, "Vector 4D section")
 
 	MANI_TEST(DotAndCrossVec4, "Should dot 2 vec4")
 	{
-		Mani::Vec4f v1 = Mani::VEC4F::FORWARD;
-		Mani::Vec4f v2 = Mani::VEC4F::RIGHT;
+		Mani::Vec4f v1 = Mani::Vec4f{ 0.0f, 0.0f, 1.0f, 0.0f };
+		Mani::Vec4f v2 = Mani::Vec4f{ 1.0f, 0.0f, 0.0f, 0.0f };
 
 		const float dot = v1.dot(v2);
 
