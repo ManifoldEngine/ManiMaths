@@ -87,7 +87,7 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2, IsNumeric T3 = float>
 		[[nodiscard]] bool isEqual(T1 v1, T2 v2, T3 tolerance = FLT_EPSILON)
 		{
-			return abs(v2 - v1) < tolerance;
+			return Math::abs(v2 - v1) < tolerance;
 		}
 
 		template<IsNumeric T>

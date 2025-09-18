@@ -58,25 +58,25 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2>
 		static bool isNearlyEqual(const Mat<T1, 4, 4>& lhs, const Mat<T2, 4, 4>& rhs, double tolerance = FLT_EPSILON)
 		{
-			return	abs(lhs._00 - rhs._00) <= tolerance &&
-					abs(lhs._10 - rhs._10) <= tolerance &&
-					abs(lhs._20 - rhs._20) <= tolerance &&
-					abs(lhs._30 - rhs._30) <= tolerance &&
+			return	Math::abs(lhs._00 - rhs._00) <= tolerance &&
+					Math::abs(lhs._10 - rhs._10) <= tolerance &&
+					Math::abs(lhs._20 - rhs._20) <= tolerance &&
+					Math::abs(lhs._30 - rhs._30) <= tolerance &&
 
-					abs(lhs._01 - rhs._01) <= tolerance &&
-					abs(lhs._11 - rhs._11) <= tolerance &&
-					abs(lhs._21 - rhs._21) <= tolerance &&
-					abs(lhs._31 - rhs._31) <= tolerance &&
+					Math::abs(lhs._01 - rhs._01) <= tolerance &&
+					Math::abs(lhs._11 - rhs._11) <= tolerance &&
+					Math::abs(lhs._21 - rhs._21) <= tolerance &&
+					Math::abs(lhs._31 - rhs._31) <= tolerance &&
 
-					abs(lhs._02 - rhs._02) <= tolerance &&
-					abs(lhs._12 - rhs._12) <= tolerance &&
-					abs(lhs._22 - rhs._22) <= tolerance &&
-					abs(lhs._32 - rhs._32) <= tolerance &&
+					Math::abs(lhs._02 - rhs._02) <= tolerance &&
+					Math::abs(lhs._12 - rhs._12) <= tolerance &&
+					Math::abs(lhs._22 - rhs._22) <= tolerance &&
+					Math::abs(lhs._32 - rhs._32) <= tolerance &&
 
-					abs(lhs._03 - rhs._03) <= tolerance &&
-					abs(lhs._13 - rhs._13) <= tolerance &&
-					abs(lhs._23 - rhs._23) <= tolerance &&
-					abs(lhs._33 - rhs._33) <= tolerance;
+					Math::abs(lhs._03 - rhs._03) <= tolerance &&
+					Math::abs(lhs._13 - rhs._13) <= tolerance &&
+					Math::abs(lhs._23 - rhs._23) <= tolerance &&
+					Math::abs(lhs._33 - rhs._33) <= tolerance;
 		}
 
 
@@ -249,7 +249,7 @@ namespace Mani
 
 			MANIMATHS_ASSERT(!Math::isEqual(aspect, _0));
 
-			const T tanHalffov = tan(fov / _2);
+			const T tanHalffov = Math::tan(fov / _2);
 
 			return {
 				_1 / (aspect * tanHalffov),				   _0,	 	     						  _0,  _0,

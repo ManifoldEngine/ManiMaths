@@ -17,8 +17,8 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2>
 		[[nodiscard]] static bool isNearlyEqual(const Vec<T1, 2>& lhs, const Vec<T2, 2> rhs, double tolerance = FLT_EPSILON)
 		{
-			return	abs(lhs.x - rhs.x) <= tolerance &&
-				abs(lhs.y - rhs.y) <= tolerance;
+			return	Math::abs(lhs.x - rhs.x) <= tolerance &&
+				Math::abs(lhs.y - rhs.y) <= tolerance;
 		}
 
 		template<IsNumeric T2>
@@ -29,7 +29,7 @@ namespace Mani
 
 		[[nodiscard]] T length() const
 		{
-			return sqrt(x * x + y * y);
+			return Math::sqrt(x * x + y * y);
 		}
 
 		[[nodiscard]] T lengthSquared() const
@@ -51,7 +51,7 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2>
 		[[nodiscard]] static T distance(const Vec<T1, 2>& v1, const Vec<T2, 2>& v2)
 		{
-			return sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
+			return Math::sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
 		}
 
 		template<IsNumeric T2>
@@ -203,7 +203,7 @@ namespace Mani
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
 	Vec<TReturn, 2> operator/(const Vec<T, 2>& lhs, TScale scale)
 	{
-		MANIMATHS_ASSERT(abs(scale) > 0);
+		MANIMATHS_ASSERT(Math::abs(scale) > 0);
 		return {
 			lhs.x / scale,
 			lhs.y / scale
@@ -213,7 +213,7 @@ namespace Mani
 	template<IsNumeric T, IsNumeric TScale>
 	void operator/=(Vec<T, 2>& lhs, TScale scale)
 	{
-		MANIMATHS_ASSERT(abs(scale) > 0);
+		MANIMATHS_ASSERT(Math::abs(scale) > 0);
 		lhs.x /= scale;
 		lhs.y /= scale;
 	}

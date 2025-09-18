@@ -20,10 +20,10 @@ namespace Mani
 		template<IsNumeric T1, IsNumeric T2>
 		[[nodiscard]] static bool isNearlyEqual(const Quat<T1>& lhs, const Quat<T2> rhs, double tolerance = FLT_EPSILON)
 		{
-			return	abs(lhs.x - rhs.x) <= tolerance &&
-					abs(lhs.y - rhs.y) <= tolerance &&
-					abs(lhs.z - rhs.z) <= tolerance &&
-					abs(lhs.w - rhs.w) <= tolerance;
+			return	Math::abs(lhs.x - rhs.x) <= tolerance &&
+					Math::abs(lhs.y - rhs.y) <= tolerance &&
+					Math::abs(lhs.z - rhs.z) <= tolerance &&
+					Math::abs(lhs.w - rhs.w) <= tolerance;
 		}
 
 		template<IsNumeric T2>
@@ -79,8 +79,8 @@ namespace Mani
 			constexpr T _2 = static_cast<T>(2);
 			const T1 q1Length = q1.length();
 			const T2 q2Length = q2.length();
-			MANIMATHS_ASSERT(abs(q1Length) > 0 && abs(q2Length) > 0);
-			return _2 * acos(dot(q1, q2) / (q1Length * q2Length));
+			MANIMATHS_ASSERT(Math::abs(q1Length) > 0 && Math::abs(q2Length) > 0);
+			return _2 * Math::acos(dot(q1, q2) / (q1Length * q2Length));
 		}
 
 		template<IsNumeric T2>
@@ -152,22 +152,22 @@ namespace Mani
 			constexpr T _0_5	= static_cast<T>(0.5);
 
 			const T cosHalfTheta = dot(q1, q2);
-			if (abs(cosHalfTheta) >= _1)
+			if (Math::abs(cosHalfTheta) >= _1)
 			{
 				return q1;
 			}
 
-			const T sinHalfTheta = sqrt(_1 - cosHalfTheta * cosHalfTheta);
-			if (abs(sinHalfTheta) < _0_001)
+			const T sinHalfTheta = Math::sqrt(_1 - cosHalfTheta * cosHalfTheta);
+			if (Math::abs(sinHalfTheta) < _0_001)
 			{
 				// result is not fully defined
 				return q1 * _0_5 + q2 * _0_5;
 			}
 
-			const T halfTheta = acos(cosHalfTheta);
+			const T halfTheta = Math::acos(cosHalfTheta);
 
-			const T ta = sin((_1 - t) * halfTheta) / sinHalfTheta;
-			const T tb = sin(t * halfTheta) / sinHalfTheta;
+			const T ta = Math::sin((_1 - t) * halfTheta) / sinHalfTheta;
+			const T tb = Math::sin(t * halfTheta) / sinHalfTheta;
 
 			return q1 * ta + q2 * tb;
 		}

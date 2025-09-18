@@ -33,7 +33,7 @@ namespace Mani
 
         [[nodiscard]] T length() const
         {
-            return sqrt(x * x + y * y + z * z + w * w);
+            return Math::sqrt(x * x + y * y + z * z + w * w);
         }
 
         [[nodiscard]] T lengthSquared() const
@@ -55,7 +55,7 @@ namespace Mani
         template<IsNumeric T1, IsNumeric T2>
         [[nodiscard]] static T distance(const Vec<T1, 4>& v1, const Vec<T2, 4>& v2)
         {
-            return sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z) + (v2.w - v1.w) * (v2.w - v1.w));
+            return Math::sqrt((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y) + (v2.z - v1.z) * (v2.z - v1.z) + (v2.w - v1.w) * (v2.w - v1.w));
         }
 
         template<IsNumeric T2>
@@ -224,7 +224,7 @@ namespace Mani
     template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
     Vec<TReturn, 4> operator/(const Vec<T, 4>& lhs, TScale scale)
     {
-        MANIMATHS_ASSERT(abs(scale) > 0);
+        MANIMATHS_ASSERT(Math::abs(scale) > 0);
         return {
             lhs.x / scale,
             lhs.y / scale,
@@ -236,7 +236,7 @@ namespace Mani
     template<IsNumeric T, IsNumeric TScale>
     void operator/=(Vec<T, 4>& lhs, TScale scale)
     {
-        MANIMATHS_ASSERT(abs(scale) > 0);
+        MANIMATHS_ASSERT(Math::abs(scale) > 0);
         lhs.x /= scale;
         lhs.y /= scale;
         lhs.z /= scale;
