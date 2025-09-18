@@ -667,5 +667,66 @@ MANI_SECTION_BEGIN(Matrix3x3, "Enter the Matrix 3x3")
 
         MANI_TEST_ASSERT(m2 == expected, "should convert properly");
     }
+
+    MANI_TEST(ConstexprMatrixOperators, "All Mat<N, T> operators should be constexpr-compatible")
+    {
+        {
+            // Mat3i
+            constexpr Mani::Mat3i m1 = {
+                 1, 2, 3,
+                 4, 5, 6,
+                 7, 8, 9
+            };
+            constexpr Mani::Mat3i m2 = {
+                 9, 8, 7,
+                 6, 5, 4,
+                 3, 2, 1
+            };
+
+            static_assert((m1 + m2) == Mani::Mat3i{ 10,10,10,10,10,10,10,10,10 });
+            static_assert((m2 - m1) == Mani::Mat3i{ 8,6,4,2,0,-2,-4,-6,-8 });
+            static_assert((m1 * 0) == Mani::Mat3i{ 0,0,0,0,0,0,0,0,0 });
+            static_assert(m1 != m2);
+        }
+
+        {
+            // Mat4i
+            constexpr Mani::Mat4i m1 = {
+                 1,  2,  3,  4,
+                 5,  6,  7,  8,
+                 9, 10, 11, 12,
+                13, 14, 15, 16
+            };
+            constexpr Mani::Mat4i m2 = {
+                16, 15, 14, 13,
+                12, 11, 10,  9,
+                 8,  7,  6,  5,
+                 4,  3,  2,  1
+            };
+
+            static_assert((m1 + m2) == Mani::Mat4i{
+                17, 17, 17, 17,
+                17, 17, 17, 17,
+                17, 17, 17, 17,
+                17, 17, 17, 17
+                });
+
+            static_assert((m2 - m1) == Mani::Mat4i{
+                15, 13, 11,  9,
+                 7,  5,  3,  1,
+                -1, -3, -5, -7,
+                -9, -11, -13, -15
+                });
+
+            static_assert((m1 * 0) == Mani::Mat4i{
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0
+                });
+
+            static_assert(m1 != m2);
+        }
+    }
 }
 MANI_SECTION_END(Matrix3x3)

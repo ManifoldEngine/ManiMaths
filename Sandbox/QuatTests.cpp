@@ -104,5 +104,29 @@ MANI_SECTION_BEGIN(Quaternion, "Quaternion section")
 			MANI_TEST_ASSERT(q2.isNearlyEqual(result2), "full slerp should be equal to q2");
 		}
 	}
+
+	MANI_TEST(ConstexprQuatfOperators, "All Quatf operators should be constexpr-compatible")
+	{
+		{
+			constexpr Mani::Quatf q1{ 0.f, 0.f, 0.f, 1.f }; // identity quaternion (x, y, z, w)
+			constexpr Mani::Quatf q2{ 1.f, 0.f, 0.f, 0.f }; // 180 deg rotation around x
+
+			// Arithmetic
+			static_assert((q1 + q2) == Mani::Quatf{ 1.f, 0.f, 0.f, 1.f });
+			static_assert((q2 - q1) == Mani::Quatf{ 1.f, 0.f, 0.f, -1.f });
+			static_assert((q1 * 2.f) == Mani::Quatf{ 0.f, 0.f, 0.f, 2.f });
+			static_assert((-q1) == Mani::Quatf{ -0.f, -0.f, -0.f, -1.f });
+
+			// Equality
+			static_assert(q1 != q2);
+			static_assert(q1 == Mani::Quatf{ 0.f, 0.f, 0.f, 1.f });
+
+			// Quaternion × Quaternion (Hamilton product, x,y,z,w convention)
+			constexpr Mani::Quatf prod = q1 * q2;
+			static_assert(prod == Mani::Quatf{ 1.f, 0.f, 0.f, 0.f });
+		}
+
+		// If this compiles and all static_asserts pass, every operator on Quatf is constexpr.
+	}
 }
 MANI_SECTION_END(Quaternion)

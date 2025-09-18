@@ -591,5 +591,47 @@ MANI_SECTION_BEGIN(Vec4, "Vector 4D section")
 			MANI_TEST_ASSERT(Mani::Math::isEqual(clamped, 20.f), "should be equal to expected value");
 		}
 	}
+
+	MANI_TEST(ConstexprOperators, "All Vec<N, T> operators should be constexpr-compatible")
+	{
+		{
+			// Vec2f
+			constexpr Mani::Vec2f a{ 1.f, 2.f };
+			constexpr Mani::Vec2f b{ 3.f, 4.f };
+
+			static_assert((a + b) == Mani::Vec2f{ 4.f, 6.f });
+			static_assert((b - a) == Mani::Vec2f{ 2.f, 2.f });
+			static_assert((a * 2.f) == Mani::Vec2f{ 2.f, 4.f });
+			static_assert((b / 2.f) == Mani::Vec2f{ 1.5f, 2.f });
+			static_assert((-a) == Mani::Vec2f{ -1.f, -2.f });
+			static_assert(a != b);
+		}
+		{
+			// Vec3f
+			constexpr Mani::Vec3f a{ 1.f, 2.f, 3.f };
+			constexpr Mani::Vec3f b{ 4.f, 5.f, 6.f };
+
+			static_assert((a + b) == Mani::Vec3f{ 5.f, 7.f, 9.f });
+			static_assert((b - a) == Mani::Vec3f{ 3.f, 3.f, 3.f });
+			static_assert((a * 3.f) == Mani::Vec3f{ 3.f, 6.f, 9.f });
+			static_assert((b / 2.f) == Mani::Vec3f{ 2.f, 2.5f, 3.f });
+			static_assert((-b) == Mani::Vec3f{ -4.f, -5.f, -6.f });
+			static_assert(a != b);
+		}
+		{
+			// Vec4f
+			constexpr Mani::Vec4f a{ 1.f, 2.f, 3.f, 4.f };
+			constexpr Mani::Vec4f b{ 5.f, 6.f, 7.f, 8.f };
+
+			static_assert((a + b) == Mani::Vec4f{ 6.f, 8.f, 10.f, 12.f });
+			static_assert((b - a) == Mani::Vec4f{ 4.f, 4.f, 4.f, 4.f });
+			static_assert((a * 2.f) == Mani::Vec4f{ 2.f, 4.f, 6.f, 8.f });
+			static_assert((b / 2.f) == Mani::Vec4f{ 2.5f, 3.f, 3.5f, 4.f });
+			static_assert((-a) == Mani::Vec4f{ -1.f, -2.f, -3.f, -4.f });
+			static_assert(a != b);
+		}
+
+		// If it compiles and all static_asserts pass, then all operators are constexpr.
+	}
 }
 MANI_SECTION_END(Vec4)

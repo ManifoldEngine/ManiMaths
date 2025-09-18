@@ -13,9 +13,9 @@ namespace Mani
 		constexpr float PIf = static_cast<float>(PId);
 
 		template<IsNumeric T>
-		[[nodiscard]] T abs(T v)
+		[[nodiscard]] constexpr T abs(T v)
 		{
-			return std::abs(v);
+			return v < T(0) ? -v : v;
 		}
 
 		template<IsNumeric T>
@@ -79,7 +79,7 @@ namespace Mani
 		}
 
 		template<IsNumeric T>
-		[[nodiscard]] T clamp(T value, T min, T max)
+		[[nodiscard]] constexpr T clamp(T value, T min, T max)
 		{
 			return minT(maxT(value, min), max);
 		}
@@ -91,7 +91,7 @@ namespace Mani
 		}
 
 		template<IsNumeric T>
-		[[nodiscard]] T degToRad(T v)
+		[[nodiscard]] T  constexpr degToRad(T v)
 		{
 			constexpr T pi = static_cast<T>(PId);
 			constexpr T _180 = static_cast<T>(180);
@@ -100,7 +100,7 @@ namespace Mani
 		}
 
 		template<IsNumeric T>
-		[[nodiscard]] T radToDeg(T v)
+		[[nodiscard]] constexpr T radToDeg(T v)
 		{
 			constexpr T pi = static_cast<T>(PId);
 			constexpr T _180 = static_cast<T>(180);

@@ -141,6 +141,11 @@ namespace Mani
 		operator Vec<T, 4>() const { return { x, y, z, static_cast<T>(0) }; }
 		Vec<T, 4> homogenous() const { return { x, y, z, static_cast<T>(1) }; }
 
+		[[nodiscard]] constexpr Vec<T, 3> operator-() const
+		{
+			return { -x, -y, -z };
+		}
+
 		[[nodiscard]] std::string toString() const
 		{
 			return std::format("({}, {}, {})", x, y, z);
@@ -155,19 +160,19 @@ namespace Mani
 	typedef Vec<unsigned long,	3> Vec3ul;
 
 	template<IsNumeric T1, IsNumeric T2>
-	bool operator==(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	[[nodiscard]] constexpr bool operator==(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	bool operator!=(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	[[nodiscard]] constexpr bool operator!=(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
 	}
 
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	Vec<TReturn, 3> operator+(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator+(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		return { 
 			lhs.x + rhs.x, 
@@ -177,7 +182,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	Vec<TReturn, 3> operator-(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator-(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		return { 
 			lhs.x - rhs.x, 
@@ -187,7 +192,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	Vec<TReturn, 3> operator*(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator*(const Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		return { 
 			lhs.x * rhs.x, 
@@ -197,7 +202,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	void operator+=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	constexpr void operator+=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		lhs.x += rhs.x;
 		lhs.y += rhs.y;
@@ -205,7 +210,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	void operator-=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	constexpr void operator-=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		lhs.x -= rhs.x;
 		lhs.y -= rhs.y;
@@ -213,7 +218,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	void operator*=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
+	constexpr void operator*=(Vec<T1, 3>& lhs, const Vec<T2, 3>& rhs)
 	{
 		lhs.x *= rhs.x;
 		lhs.y *= rhs.y;
@@ -221,7 +226,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
-	Vec<TReturn, 3> operator*(const Vec<T, 3>& lhs, TScale scale)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator*(const Vec<T, 3>& lhs, TScale scale)
 	{
 		return {
 			lhs.x * scale,
@@ -231,7 +236,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
-	Vec<TReturn, 3> operator*(TScale scale, const Vec<T, 3>& rhs)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator*(TScale scale, const Vec<T, 3>& rhs)
 	{
 		return {
 			rhs.x * scale,
@@ -241,7 +246,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale>
-	void operator*=(Vec<T, 3>& lhs, TScale scale)
+	constexpr void operator*=(Vec<T, 3>& lhs, TScale scale)
 	{
 		lhs.x *= scale;
 		lhs.y *= scale;
@@ -249,7 +254,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
-	Vec<TReturn, 3> operator/(const Vec<T, 3>& lhs, TScale scale)
+	[[nodiscard]] constexpr Vec<TReturn, 3> operator/(const Vec<T, 3>& lhs, TScale scale)
 	{
 		MANIMATHS_ASSERT(Math::abs(scale) > 0);
 		return {
@@ -260,7 +265,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale>
-	void operator/=(Vec<T, 3>& lhs, TScale scale)
+	constexpr void operator/=(Vec<T, 3>& lhs, TScale scale)
 	{
 		MANIMATHS_ASSERT(Math::abs(scale) > 0);
 		lhs.x /= scale;

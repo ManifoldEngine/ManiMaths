@@ -296,7 +296,7 @@ namespace Mani
 	typedef Mat<unsigned long,	4, 4> Mat4ul;
 
 	template<IsNumeric T>
-	bool operator==(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr bool operator==(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return	lhs._00 == rhs._00 && lhs._01 == rhs._01 && lhs._02 == rhs._02 && lhs._03 == rhs._03 &&
 				lhs._10 == rhs._10 && lhs._11 == rhs._11 && lhs._12 == rhs._12 && lhs._13 == rhs._13 &&
@@ -305,7 +305,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	bool operator!=(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr bool operator!=(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return	lhs._00 != rhs._00 || lhs._01 != rhs._01 || lhs._02 != rhs._02 || lhs._03 != rhs._03 ||
 				lhs._10 != rhs._10 || lhs._11 != rhs._11 || lhs._12 != rhs._12 || lhs._13 != rhs._13 ||
@@ -314,7 +314,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator+(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr Mat<T, 4, 4> operator+(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return Mat<T, 4, 4>{
 			lhs._00 + rhs._00, lhs._01 + rhs._01, lhs._02 + rhs._02, lhs._03 + rhs._03,
@@ -325,7 +325,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator-(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr Mat<T, 4, 4> operator-(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return Mat<T, 4, 4>{
 			lhs._00 - rhs._00, lhs._01 - rhs._01, lhs._02 - rhs._02, lhs._03 - rhs._03,
@@ -336,7 +336,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	void operator+=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr void operator+=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		lhs._00 += rhs._00; lhs._01 += rhs._01; lhs._02 += rhs._02; lhs._03 += rhs._03;
 		lhs._10 += rhs._10; lhs._11 += rhs._11; lhs._12 += rhs._12; lhs._13 += rhs._13;
@@ -345,7 +345,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	void operator-=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr void operator-=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		lhs._00 -= rhs._00; lhs._01 -= rhs._01; lhs._02 -= rhs._02; lhs._03 -= rhs._03;
 		lhs._10 -= rhs._10; lhs._11 -= rhs._11; lhs._12 -= rhs._12; lhs._13 -= rhs._13;
@@ -354,7 +354,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator*(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr Mat<T, 4, 4> operator*(const Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return Mat<T, 4, 4>{
 			lhs._00 * rhs._00 + lhs._10 * rhs._01 + lhs._20 * rhs._02 + lhs._30 * rhs._03, // _00
@@ -380,13 +380,13 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	void operator*=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
+	constexpr void operator*=(Mat<T, 4, 4>& lhs, const Mat<T, 4, 4>& rhs)
 	{
 		lhs = lhs * rhs;
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator*(const Mat<T, 4, 4>& lhs, T rhs)
+	constexpr Mat<T, 4, 4> operator*(const Mat<T, 4, 4>& lhs, T rhs)
 	{
 		return Mat<T, 4, 4>{
 			lhs._00 * rhs, lhs._01 * rhs, lhs._02 * rhs, lhs._03 * rhs,
@@ -397,7 +397,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator*(T lhs, const Mat<T, 4, 4>& rhs)
+	constexpr Mat<T, 4, 4> operator*(T lhs, const Mat<T, 4, 4>& rhs)
 	{
 		return Mat<T, 4, 4>{
 			rhs._00 * lhs, rhs._01* lhs, rhs._02 * lhs, rhs._03* lhs,
@@ -408,7 +408,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	void operator*=(Mat<T, 4, 4>& lhs, T rhs)
+	constexpr void operator*=(Mat<T, 4, 4>& lhs, T rhs)
 	{
 		lhs._00 *= rhs; lhs._01 *= rhs; lhs._02 *= rhs; lhs._03 *= rhs;
 		lhs._10 *= rhs; lhs._11 *= rhs; lhs._12 *= rhs; lhs._13 *= rhs;
@@ -417,7 +417,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Mat<T, 4, 4> operator/(const Mat<T, 4, 4>& lhs, T rhs)
+	constexpr Mat<T, 4, 4> operator/(const Mat<T, 4, 4>& lhs, T rhs)
 	{
 		return Mat<T, 4, 4>{
 			lhs._00 / rhs, lhs._01 / rhs, lhs._02 / rhs, lhs._03 / rhs,
@@ -428,7 +428,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	void operator/=(Mat<T, 4, 4>& lhs, T rhs)
+	constexpr void operator/=(Mat<T, 4, 4>& lhs, T rhs)
 	{
 		lhs._00 /= rhs; lhs._01 /= rhs; lhs._02 /= rhs; lhs._03 /= rhs;
 		lhs._10 /= rhs; lhs._11 /= rhs; lhs._12 /= rhs; lhs._13 /= rhs;
@@ -437,7 +437,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Vec<T, 4> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 4>& v)
+	constexpr Vec<T, 4> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 4>& v)
 	{
 		return {
 			mat._00 * v.x + mat._10 * v.y + mat._20 * v.z + mat._30 * v.w,
@@ -448,7 +448,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Vec<T, 4> operator*(const Vec<T, 4>& v, const Mat<T, 4, 4>& mat)
+	constexpr Vec<T, 4> operator*(const Vec<T, 4>& v, const Mat<T, 4, 4>& mat)
 	{
 		return {
 			mat._00 * v.x + mat._01 * v.y + mat._02 * v.z + mat._03,
@@ -458,7 +458,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T>
-	Vec<T, 3> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 3>& v)
+	constexpr Vec<T, 3> operator*(const Mat<T, 4, 4>& mat, const Vec<T, 3>& v)
 	{
 		const Vec<T, 4> result = mat * v.homogenous();
 		return result / result.w;

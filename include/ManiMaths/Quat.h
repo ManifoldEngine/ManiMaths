@@ -202,6 +202,11 @@ namespace Mani
 			return static_cast<Mat<T, 3, 3>>(*this);
 		}
 
+		[[nodiscard]] constexpr Quat<T> operator-() const
+		{
+			return { -x, -y, -z, -w };
+		}
+
 		[[nodiscard]] std::string toString() const
 		{
 			return std::format("({}, {}, {}, {})", x, y, z, w);
@@ -224,19 +229,19 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	[[nodiscard]] bool operator==(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	[[nodiscard]] constexpr bool operator==(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	[[nodiscard]] bool operator!=(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	[[nodiscard]] constexpr bool operator!=(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z || lhs.w != rhs.w;
 	}
 
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	[[nodiscard]] Quat<TReturn> operator+(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	[[nodiscard]] constexpr Quat<TReturn> operator+(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return {
 			lhs.x + rhs.x,
@@ -247,7 +252,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	[[nodiscard]] Quat<TReturn> operator-(const Quat<T1>& lhs, const Quat<T2>& rhs)
+	[[nodiscard]] constexpr Quat<TReturn> operator-(const Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		return {
 			lhs.x - rhs.x,
@@ -258,7 +263,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	void operator+=(Quat<T1>& lhs, const Quat<T2>& rhs)
+	constexpr void operator+=(Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		lhs.x += rhs.x;
 		lhs.y += rhs.y;
@@ -267,7 +272,7 @@ namespace Mani
 	}
 
 	template<IsNumeric T1, IsNumeric T2>
-	void operator-=(Quat<T1>& lhs, const Quat<T2>& rhs)
+	constexpr void operator-=(Quat<T1>& lhs, const Quat<T2>& rhs)
 	{
 		lhs.x -= rhs.x;
 		lhs.y -= rhs.y;
@@ -277,7 +282,7 @@ namespace Mani
 
 	// Hamilton product
 	template<IsNumeric T1, IsNumeric T2, IsNumeric TReturn = T1>
-	[[nodiscard]] Quat<TReturn> operator*(const Quat<T1>& lhs, const Quat<T2> rhs)
+	[[nodiscard]] constexpr Quat<TReturn> operator*(const Quat<T1>& lhs, const Quat<T2> rhs)
 	{
 		return {
 			lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y,
@@ -288,19 +293,19 @@ namespace Mani
 	}
 
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
-	[[nodiscard]] Quat<TReturn> operator*(const Quat<T>& lhs, TScale scale)
+	[[nodiscard]] constexpr Quat<TReturn> operator*(const Quat<T>& lhs, TScale scale)
 	{
 		return { lhs.x * scale, lhs.y * scale, lhs.z * scale, lhs.w * scale };
 	}
 
 	template<IsNumeric T, IsNumeric TScale, IsNumeric TReturn = T>
-	[[nodiscard]] Quat<TReturn> operator*(TScale scale, const Quat<T>& rhs)
+	[[nodiscard]] constexpr Quat<TReturn> operator*(TScale scale, const Quat<T>& rhs)
 	{
 		return { rhs.x * scale, rhs.y * scale, rhs.z * scale, rhs.w * scale };
 	}
 
 	template<IsNumeric T, IsNumeric TScale>
-	void operator*=(Quat<T>& lhs, TScale scale)
+	constexpr void operator*=(Quat<T>& lhs, TScale scale)
 	{
 		lhs.x *= scale;
 		lhs.y *= scale;
