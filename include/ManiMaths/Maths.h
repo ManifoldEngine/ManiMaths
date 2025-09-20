@@ -114,5 +114,45 @@ namespace Mani
 			MANIMATHS_ASSERT(Math::abs(max - min) > FLT_EPSILON);
 			return min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / (max - min)));
 		}
+
+		template<IsNumeric T>
+		[[nodiscard]] T floor(T value)
+		{
+			return std::floor(value);
+		}
+
+		template<IsNumeric T>
+		[[nodiscard]] T ceil(T value)
+		{
+			return std::ceil(value);
+		}
+
+		template<IsNumeric T>
+		requires (Is8BytesType<T>)
+		[[nodiscard]] long long floorToInt(T value)
+		{
+			return static_cast<long long>(Mani::Math::floor(value));
+		}
+
+		template<IsNumeric T>
+		requires (Is4BytesType<T>)
+		[[nodiscard]] int floorToInt(T value)
+		{
+			return static_cast<int>(Mani::Math::floor(value));
+		}
+
+		template<IsNumeric T>
+		requires (Is8BytesType<T>)
+		[[nodiscard]] long long ceilToInt(T value)
+		{
+			return static_cast<long long>(Mani::Math::ceil(value));
+		}
+
+		template<IsNumeric T>
+		requires (Is4BytesType<T>)
+		[[nodiscard]] int ceilToInt(T value)
+		{
+			return static_cast<int>(Mani::Math::ceil(value));
+		}
 	}
 }

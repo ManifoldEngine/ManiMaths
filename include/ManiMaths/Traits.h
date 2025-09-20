@@ -12,4 +12,10 @@ namespace Mani
 
 	template<typename T>
 	concept IsUnsignedInteger = std::is_integral<T>::value && std::is_unsigned<T>::value;
+
+	template<typename T>
+	concept Is8BytesType = (sizeof(T) == 8);
+
+	template<typename T>
+	concept Is4BytesType = (sizeof(T) == 4);
 }

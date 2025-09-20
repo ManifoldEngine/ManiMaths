@@ -728,5 +728,79 @@ MANI_SECTION_BEGIN(Matrix3x3, "Enter the Matrix 3x3")
             static_assert(m1 != m2);
         }
     }
+
+    MANI_TEST(FloorCeilFunctions, "floor/ceil should work properly")
+    {
+        {
+            double v1 = 3.7;
+            double v2 = -3.7;
+
+            MANI_TEST_ASSERT(Mani::Math::floor(v1) == 3.0, "floor positive");
+            MANI_TEST_ASSERT(Mani::Math::floor(v2) == -4.0, "floor negative");
+
+            MANI_TEST_ASSERT(Mani::Math::ceil(v1) == 4.0, "ceil positive");
+            MANI_TEST_ASSERT(Mani::Math::ceil(v2) == -3.0, "ceil negative");
+        }
+
+        {
+            float v1 = 2.9f;
+            float v2 = -2.9f;
+
+            MANI_TEST_ASSERT(Mani::Math::floor(v1) == 2.0f, "floor positive");
+            MANI_TEST_ASSERT(Mani::Math::floor(v2) == -3.0f, "floor negative");
+
+            MANI_TEST_ASSERT(Mani::Math::ceil(v1) == 3.0f, "ceil positive");
+            MANI_TEST_ASSERT(Mani::Math::ceil(v2) == -2.0f, "ceil negative");
+        }
+
+        {
+            double v = 5.0;
+            MANI_TEST_ASSERT(Mani::Math::floor(v) == 5.0, "floor exact");
+            MANI_TEST_ASSERT(Mani::Math::ceil(v) == 5.0, "ceil exact");
+        }
+
+        {
+            float v = -7.0f;
+            MANI_TEST_ASSERT(Mani::Math::floor(v) == -7.0f, "floor exact negative");
+            MANI_TEST_ASSERT(Mani::Math::ceil(v) == -7.0f, "ceil exact negative");
+        }
+    }
+
+    MANI_TEST(FloorCeilToIntFunctions, "floorToInt/ceilToInt should work properly")
+    {
+        {
+            double v1 = 3.7;
+            double v2 = -3.7;
+
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v1) == 3, "floorToInt positive double");
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v2) == -4, "floorToInt negative double");
+
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v1) == 4, "ceilToInt positive double");
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v2) == -3, "ceilToInt negative double");
+        }
+
+        {
+            float v1 = 2.9f;
+            float v2 = -2.9f;
+
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v1) == 2, "floorToInt positive float");
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v2) == -3, "floorToInt negative float");
+
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v1) == 3, "ceilToInt positive float");
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v2) == -2, "ceilToInt negative float");
+        }
+
+        {
+            double v = 5.0;
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v) == 5, "floorToInt exact double");
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v) == 5, "ceilToInt exact double");
+        }
+
+        {
+            float v = -7.0f;
+            MANI_TEST_ASSERT(Mani::Math::floorToInt(v) == -7, "floorToInt exact negative float");
+            MANI_TEST_ASSERT(Mani::Math::ceilToInt(v) == -7, "ceilToInt exact negative float");
+        }
+    }
 }
 MANI_SECTION_END(Matrix3x3)
