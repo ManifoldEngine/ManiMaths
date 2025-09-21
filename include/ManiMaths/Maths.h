@@ -154,5 +154,12 @@ namespace Mani
 		{
 			return static_cast<int>(Mani::Math::ceil(value));
 		}
+
+		template<IsNumeric T>
+		requires (IsFloatingPoint<T>)
+		[[nodiscard]] T fmod(T divident, T divisor)
+		{
+			return std::fmod(divident, divisor);
+		}
 	}
 }

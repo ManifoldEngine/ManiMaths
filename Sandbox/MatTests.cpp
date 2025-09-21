@@ -802,5 +802,43 @@ MANI_SECTION_BEGIN(Matrix3x3, "Enter the Matrix 3x3")
             MANI_TEST_ASSERT(Mani::Math::ceilToInt(v) == -7, "ceilToInt exact negative float");
         }
     }
+
+    MANI_TEST(ModFunction, "mod should return the remainder with the sign of the divisor")
+    {
+        {
+            double v1 = 5.3;
+            double v2 = 2.0;
+            double r = Mani::Math::fmod(v1, v2);
+            MANI_TEST_ASSERT(Mani::Math::isEqual(r, 1.3), "fmod positive double");
+        }
+
+        {
+            double v1 = -5.3;
+            double v2 = 2.0;
+            double r = Mani::Math::fmod(v1, v2);
+            MANI_TEST_ASSERT(Mani::Math::isEqual(r, -1.3), "fmod negative numerator");
+        }
+
+        {
+            double v1 = 5.3;
+            double v2 = -2.0;
+            double r = Mani::Math::fmod(v1, v2);
+            MANI_TEST_ASSERT(Mani::Math::isEqual(r, 1.3), "fmod negative denominator");
+        }
+
+        {
+            float v1 = -7.5f;
+            float v2 = 2.5f;
+            float r = Mani::Math::fmod(v1, v2);
+            MANI_TEST_ASSERT(Mani::Math::isEqual(r, -0.0f), "fmod exact division with negative numerator");
+        }
+
+        {
+            double v1 = 9.0;
+            double v2 = 3.0;
+            double r = Mani::Math::fmod(v1, v2);
+            MANI_TEST_ASSERT(Mani::Math::isEqual(r, 0.0), "fmod exact division positive");
+        }
+    }
 }
 MANI_SECTION_END(Matrix3x3)

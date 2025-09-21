@@ -8,6 +8,9 @@ namespace Mani
 	concept IsNumeric = std::is_arithmetic<T>::value;
 
 	template<typename T>
+	concept IsFloatingPoint = std::is_floating_point<T>::value;
+
+	template<typename T>
 	concept IsInteger = std::is_integral<T>::value;
 
 	template<typename T>
