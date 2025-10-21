@@ -116,7 +116,6 @@ namespace Mani
 
 			// determinant
 			T det = inv00 * inv11 - inv01 * inv10 + inv02 * inv09 + inv03 * inv08 - inv04 * inv07 + inv05 * inv06;
-			MANIMATHS_ASSERT(!Math::isEqual(det, __0));
 			T invDet = __1 / det;
 
 			return {
